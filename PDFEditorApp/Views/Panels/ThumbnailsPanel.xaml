@@ -1,0 +1,47 @@
+<UserControl x:Class="PDFEditorApp.Views.Panels.ThumbnailsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:v="clr-namespace:PDFEditorApp.Views">
+  <DockPanel>
+    <TextBlock DockPanel.Dock="Top" Style="{StaticResource PanelTitle}" Margin="16,14,16,8" Text="{v:Tr Panel_Pages}" />
+    <ListBox x:Name="List"
+             Style="{StaticResource PanelList}"
+             Padding="10,0,10,10"
+             VirtualizingPanel.IsVirtualizing="True"
+             VirtualizingPanel.VirtualizationMode="Standard"
+             ScrollViewer.CanContentScroll="True"
+             SelectionChanged="OnSelectionChanged">
+      <ListBox.ContextMenu>
+        <ContextMenu>
+          <ContextMenu.Resources>
+            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+              <Setter Property="CommandTarget" Value="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            </Style>
+          </ContextMenu.Resources>
+          <MenuItem Header="{v:Tr Menu_RotateRight}" Command="v:AppCommands.RotateRight" />
+          <MenuItem Header="{v:Tr Menu_RotateLeft}" Command="v:AppCommands.RotateLeft" />
+          <Separator />
+          <MenuItem Header="{v:Tr Menu_InsertBlankPage}" Command="v:AppCommands.InsertBlankPage" />
+          <MenuItem Header="{v:Tr Menu_DuplicatePage}" Command="v:AppCommands.DuplicatePage" />
+          <MenuItem Header="{v:Tr Menu_ExtractPages}" Command="v:AppCommands.ExtractPages" />
+          <MenuItem Header="{v:Tr Menu_DeletePage}" Command="v:AppCommands.DeletePage" />
+          <Separator />
+          <MenuItem Header="{v:Tr Menu_MovePageUp}" Command="v:AppCommands.MovePageUp" />
+          <MenuItem Header="{v:Tr Menu_MovePageDown}" Command="v:AppCommands.MovePageDown" />
+        </ContextMenu>
+      </ListBox.ContextMenu>
+      <ListBox.ItemTemplate>
+        <DataTemplate DataType="{x:Type v:ThumbnailItem}">
+          <StackPanel HorizontalAlignment="Center" Loaded="OnItemLoaded" Margin="0,4">
+            <Border Width="{Binding Width}" Height="{Binding Height}" Background="White" CornerRadius="3"
+                    BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="1">
+              <Image Source="{Binding Image}" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" />
+            </Border>
+            <TextBlock HorizontalAlignment="Center" Margin="0,6,0,0" FontSize="12"
+                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding PageNumber}" />
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

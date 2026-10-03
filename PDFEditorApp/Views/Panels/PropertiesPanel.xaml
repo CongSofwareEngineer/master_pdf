@@ -1,0 +1,132 @@
+<UserControl x:Class="PDFEditorApp.Views.Panels.PropertiesPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:v="clr-namespace:PDFEditorApp.Views">
+  <DockPanel>
+    <TextBlock x:Name="HeaderText" DockPanel.Dock="Top" Style="{StaticResource PanelTitle}" Margin="18,14,16,4" />
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <StackPanel Margin="18,0,18,18">
+
+        <!-- ===== Thông tin tài liệu ===== -->
+        <StackPanel x:Name="DocSection">
+          <Grid x:Name="DocGrid" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+          </Grid>
+        </StackPanel>
+
+        <!-- ===== Đoạn chữ đang chọn ===== -->
+        <StackPanel x:Name="SelectionSection">
+          <Border Style="{StaticResource Card}" Margin="0,8,0,0" Padding="10">
+            <TextBlock x:Name="SelectionText" TextWrapping="Wrap" MaxHeight="120" TextTrimming="CharacterEllipsis" />
+          </Border>
+          <TextBlock Style="{StaticResource SectionHeader}" Text="{v:Tr Props_Actions}" />
+          <WrapPanel>
+            <ui:Button Margin="0,0,6,6" Icon="{ui:SymbolIcon Copy24}" Click="OnCopyClick" Content="{v:Tr Props_Copy}" />
+            <ui:Button Margin="0,0,6,6" Icon="{ui:SymbolIcon Highlight24}" Click="OnHighlightClick" Content="{v:Tr Tool_Highlight}" />
+            <ui:Button Margin="0,0,6,6" Icon="{ui:SymbolIcon TextUnderline24}" Click="OnUnderlineClick" Content="{v:Tr Tool_Underline}" />
+            <ui:Button Margin="0,0,6,6" Icon="{ui:SymbolIcon TextStrikethrough24}" Click="OnStrikeClick" Content="{v:Tr Tool_StrikeOut}" />
+          </WrapPanel>
+        </StackPanel>
+
+        <!-- ===== Nhận xét đang chọn ===== -->
+        <StackPanel x:Name="AnnotSection">
+          <TextBlock x:Name="AnnotInfo" Style="{StaticResource MutedText}" Margin="0,8,0,0" />
+          <TextBlock Style="{StaticResource FieldLabel}" Text="{v:Tr Props_CommentText}" />
+          <ui:TextBox x:Name="AnnotContents" MinHeight="80" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+          <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <ui:Button Appearance="Primary" Click="OnSaveCommentClick" Content="{v:Tr Props_SaveComment}" />
+            <ui:Button Margin="8,0,0,0" Icon="{ui:SymbolIcon Delete24}" Click="OnDeleteAnnotationClick" Content="{v:Tr Panel_Delete}" />
+          </StackPanel>
+        </StackPanel>
+
+        <!-- ===== Màu / nét của công cụ ===== -->
+        <StackPanel x:Name="ColorSection">
+          <TextBlock Style="{StaticResource SectionHeader}" Text="{v:Tr Props_Color}" />
+          <WrapPanel x:Name="Swatches" />
+          <StackPanel x:Name="WidthSection">
+            <TextBlock x:Name="WidthLabel" Style="{StaticResource FieldLabel}" />
+            <Slider x:Name="WidthSlider" Minimum="0.5" Maximum="12" SmallChange="0.5" LargeChange="1"
+                    IsSnapToTickEnabled="True" TickFrequency="0.5" ValueChanged="OnWidthChanged" />
+          </StackPanel>
+          <TextBlock x:Name="OpacityLabel" Style="{StaticResource FieldLabel}" />
+          <Slider x:Name="OpacitySlider" Minimum="0.1" Maximum="1" SmallChange="0.05" LargeChange="0.1" ValueChanged="OnOpacityChanged" />
+          <CheckBox x:Name="FillBox" Margin="0,10,0,0" Click="OnFillClick">
+            <TextBlock Text="{v:Tr Props_FillShape}" />
+          </CheckBox>
+        </StackPanel>
+
+        <!-- ===== Kiểu chữ (thêm chữ / chữ đang chọn) ===== -->
+        <StackPanel x:Name="TextStyleSection">
+          <StackPanel x:Name="TextContentPanel">
+            <TextBlock Style="{StaticResource FieldLabel}" Text="{v:Tr Panel_Content}" />
+            <ui:TextBox x:Name="TextContent" MinHeight="70" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top"
+                        PreviewKeyDown="OnTextContentKeyDown" />
+          </StackPanel>
+          <TextBlock Style="{StaticResource FieldLabel}" Text="{v:Tr Panel_Font}" />
+          <ComboBox x:Name="FontBox" SelectionChanged="OnStyleChanged" />
+          <Grid Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="SizeBox" IsEditable="True" Margin="0,0,6,0" ToolTip="{v:Tr Panel_Size}"
+                      SelectionChanged="OnStyleChanged" LostFocus="OnSizeLostFocus" />
+            <v:IconToggle x:Name="BoldToggle" Grid.Column="1" Width="34" Height="34" FontSize="18" Symbol="TextBold24"
+                          ToolTip="{v:Tr Panel_Bold}" Click="OnStyleClick" />
+            <v:IconToggle x:Name="ItalicToggle" Grid.Column="2" Width="34" Height="34" FontSize="18" Symbol="TextItalic24"
+                          ToolTip="{v:Tr Panel_Italic}" Click="OnStyleClick" />
+          </Grid>
+          <TextBlock Style="{StaticResource FieldLabel}" Text="{v:Tr Props_Color}" />
+          <WrapPanel x:Name="TextSwatches" />
+          <TextBlock x:Name="OriginalFontText" Margin="0,6,0,0" FontSize="11" Style="{StaticResource MutedText}" />
+          <StackPanel x:Name="TextButtons" Orientation="Horizontal" Margin="0,12,0,0">
+            <ui:Button Appearance="Primary" Click="OnApplyTextClick" Content="{v:Tr Panel_Apply}" ToolTip="{v:Tr Panel_ApplyTip}" />
+            <ui:Button Margin="8,0,0,0" Icon="{ui:SymbolIcon Delete24}" Click="OnDeleteObjectClick" Content="{v:Tr Panel_Delete}" />
+          </StackPanel>
+        </StackPanel>
+
+        <!-- ===== Object đang chọn (ảnh / hình) ===== -->
+        <StackPanel x:Name="ObjectSection">
+          <TextBlock x:Name="ObjectInfo" Style="{StaticResource MutedText}" Margin="0,8,0,0" />
+          <ui:Button Margin="0,12,0,0" Icon="{ui:SymbolIcon Delete24}" Click="OnDeleteObjectClick" Content="{v:Tr Panel_Delete}" />
+        </StackPanel>
+
+        <!-- ===== Điền & Ký ===== -->
+        <StackPanel x:Name="SignSection">
+          <TextBlock Style="{StaticResource SectionHeader}" Text="{v:Tr Props_QuickFill}" />
+          <WrapPanel>
+            <ui:Button Margin="0,0,6,6" Icon="{ui:SymbolIcon Checkmark24}" Click="OnCheckClick" Content="{v:Tr Tool_Check}" />
+            <ui:Button Margin="0,0,6,6" Icon="{ui:SymbolIcon Dismiss24}" Click="OnCrossClick" Content="{v:Tr Tool_Cross}" />
+            <ui:Button Margin="0,0,6,6" Icon="{ui:SymbolIcon CalendarLtr24}" Click="OnDateClick" Content="{v:Tr Tool_Date}" />
+          </WrapPanel>
+          <TextBlock Style="{StaticResource SectionHeader}" Text="{v:Tr Props_Signatures}" />
+          <StackPanel x:Name="SignatureList" />
+          <ui:Button Margin="0,8,0,0" Appearance="Primary" Icon="{ui:SymbolIcon Signature24}" Click="OnNewSignatureClick" Content="{v:Tr Props_NewSignature}" />
+        </StackPanel>
+
+        <!-- ===== Che thông tin ===== -->
+        <StackPanel x:Name="RedactSection">
+          <TextBlock x:Name="RedactCount" Margin="0,8,0,0" />
+          <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <ui:Button Appearance="Danger" Click="OnApplyRedactClick" Content="{v:Tr Props_ApplyRedactions}" />
+            <ui:Button Margin="8,0,0,0" Click="OnClearRedactClick" Content="{v:Tr Props_ClearRedactions}" />
+          </StackPanel>
+        </StackPanel>
+
+        <!-- ===== Gợi ý ===== -->
+        <Border x:Name="HintCard" Style="{StaticResource Card}" Margin="0,16,0,0" Padding="12">
+          <DockPanel>
+            <ui:SymbolIcon DockPanel.Dock="Left" Symbol="Lightbulb24" FontSize="18" Margin="0,0,10,0" VerticalAlignment="Top"
+                           Foreground="{DynamicResource AccentBrandBrush}" />
+            <TextBlock x:Name="HintText" Style="{StaticResource MutedText}" />
+          </DockPanel>
+        </Border>
+      </StackPanel>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

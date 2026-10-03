@@ -1,0 +1,74 @@
+<UserControl x:Class="PDFEditorApp.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:v="clr-namespace:PDFEditorApp.Views">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid Margin="56,40,56,40" MaxWidth="1100">
+      <StackPanel>
+        <TextBlock FontSize="32" FontWeight="SemiBold" Text="{v:Tr Home_Title}" />
+        <TextBlock Margin="0,6,0,0" FontSize="15" Style="{StaticResource MutedText}" Text="{v:Tr Home_Subtitle}" />
+
+        <!-- Thao tác nhanh -->
+        <UniformGrid Margin="0,28,0,0" Columns="4">
+          <ui:CardAction Margin="0,0,12,12" Icon="{ui:SymbolIcon FolderOpen24}" Click="OnOpenClick">
+            <StackPanel>
+              <TextBlock FontWeight="SemiBold" Text="{v:Tr Home_Open}" />
+              <TextBlock FontSize="12" Style="{StaticResource MutedText}" Text="{v:Tr Home_OpenDesc}" />
+            </StackPanel>
+          </ui:CardAction>
+          <ui:CardAction Margin="0,0,12,12" Icon="{ui:SymbolIcon DocumentAdd24}" Click="OnNewClick">
+            <StackPanel>
+              <TextBlock FontWeight="SemiBold" Text="{v:Tr Home_New}" />
+              <TextBlock FontSize="12" Style="{StaticResource MutedText}" Text="{v:Tr Home_NewDesc}" />
+            </StackPanel>
+          </ui:CardAction>
+          <ui:CardAction Margin="0,0,12,12" Icon="{ui:SymbolIcon Merge24}" Click="OnCombineClick">
+            <StackPanel>
+              <TextBlock FontWeight="SemiBold" Text="{v:Tr Home_Combine}" />
+              <TextBlock FontSize="12" Style="{StaticResource MutedText}" Text="{v:Tr Home_CombineDesc}" />
+            </StackPanel>
+          </ui:CardAction>
+          <ui:CardAction Margin="0,0,0,12" Icon="{ui:SymbolIcon ImageMultiple24}" Click="OnImagesClick">
+            <StackPanel>
+              <TextBlock FontWeight="SemiBold" Text="{v:Tr Home_Images}" />
+              <TextBlock FontSize="12" Style="{StaticResource MutedText}" Text="{v:Tr Home_ImagesDesc}" />
+            </StackPanel>
+          </ui:CardAction>
+        </UniformGrid>
+
+        <!-- Kéo thả -->
+        <Border Margin="0,8,0,0" CornerRadius="10" Padding="20" BorderThickness="1.5"
+                BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}">
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <ui:SymbolIcon Symbol="ArrowUpload24" FontSize="22" Foreground="{DynamicResource AccentBrandBrush}" />
+            <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Style="{StaticResource MutedText}" Text="{v:Tr Home_Drop}" />
+          </StackPanel>
+        </Border>
+
+        <!-- Gần đây -->
+        <DockPanel Margin="0,30,0,10">
+          <ui:Button DockPanel.Dock="Right" Appearance="Transparent" Click="OnClearRecentClick" Content="{v:Tr Menu_RecentClear}" x:Name="ClearRecentButton" />
+          <TextBlock FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Text="{v:Tr Home_Recent}" />
+        </DockPanel>
+        <TextBlock x:Name="NoRecentText" Style="{StaticResource MutedText}" Text="{v:Tr Home_NoRecent}" />
+        <ItemsControl x:Name="RecentList">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <ui:CardAction Margin="0,0,0,6" Padding="14,10" Icon="{ui:SymbolIcon DocumentPdf24}" Click="OnRecentClick" Tag="{Binding Path}">
+                <DockPanel>
+                  <TextBlock DockPanel.Dock="Right" Margin="12,0,0,0" VerticalAlignment="Center" FontSize="12"
+                             Style="{StaticResource MutedText}" Text="{Binding Modified}" />
+                  <StackPanel>
+                    <TextBlock FontWeight="SemiBold" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                    <TextBlock FontSize="12" Style="{StaticResource MutedText}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Folder}" />
+                  </StackPanel>
+                </DockPanel>
+              </ui:CardAction>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Grid>
+  </ScrollViewer>
+</UserControl>

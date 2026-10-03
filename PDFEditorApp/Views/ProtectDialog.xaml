@@ -1,0 +1,30 @@
+<ui:FluentWindow x:Class="PDFEditorApp.Views.ProtectDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:v="clr-namespace:PDFEditorApp.Views"
+                 Width="460" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+                 ExtendsContentIntoTitleBar="True" WindowBackdropType="Mica" WindowCornerPreference="Round"
+                 FontFamily="{StaticResource UiFont}" Title="{v:Tr Protect_Title}">
+  <StackPanel>
+    <ui:TitleBar Title="{v:Tr Protect_Title}" ShowMinimize="False" ShowMaximize="False" CanMaximize="False" />
+    <StackPanel Margin="22,6,22,20">
+      <TextBlock Style="{StaticResource MutedText}" Text="{v:Tr Protect_Description}" />
+      <TextBlock Style="{StaticResource FieldLabel}" Text="{v:Tr Protect_Password}" />
+      <PasswordBox x:Name="PasswordBox1" />
+      <TextBlock Style="{StaticResource FieldLabel}" Text="{v:Tr Protect_Confirm}" />
+      <PasswordBox x:Name="PasswordBox2" />
+      <TextBlock Style="{StaticResource FieldLabel}" Text="{v:Tr Protect_OwnerPassword}" />
+      <PasswordBox x:Name="OwnerBox" />
+      <TextBlock Style="{StaticResource SectionHeader}" Text="{v:Tr Protect_Permissions}" />
+      <CheckBox x:Name="PrintBox" IsChecked="True" Margin="0,2" Content="{v:Tr Protect_AllowPrint}" />
+      <CheckBox x:Name="CopyBox" IsChecked="True" Margin="0,2" Content="{v:Tr Protect_AllowCopy}" />
+      <CheckBox x:Name="EditBox" Margin="0,2" Content="{v:Tr Protect_AllowEdit}" />
+      <TextBlock x:Name="ErrorText" Margin="0,10,0,0" Foreground="{DynamicResource DangerBrush}" TextWrapping="Wrap" Visibility="Collapsed" />
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+        <ui:Button Appearance="Primary" IsDefault="True" MinWidth="96" Click="OnOkClick" Content="{v:Tr Common_Apply}" />
+        <ui:Button Margin="8,0,0,0" IsCancel="True" MinWidth="96" Content="{v:Tr Common_Cancel}" />
+      </StackPanel>
+    </StackPanel>
+  </StackPanel>
+</ui:FluentWindow>

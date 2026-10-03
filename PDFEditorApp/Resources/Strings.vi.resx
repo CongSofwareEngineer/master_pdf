@@ -1,0 +1,1233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- Tieng Viet. Moi key phai co trong Strings.resx - xem docs/i18n.md -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App_Title" xml:space="preserve">
+    <value>PDF Editor</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>Đồng ý</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="Common_Apply" xml:space="preserve">
+    <value>Áp dụng</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Common_DontSave" xml:space="preserve">
+    <value>Không lưu</value>
+  </data>
+  <data name="Common_Yes" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="Common_No" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="Doc_Untitled" xml:space="preserve">
+    <value>Tài liệu mới</value>
+  </data>
+  <data name="Doc_UntitledFile" xml:space="preserve">
+    <value>Tai-lieu-moi</value>
+  </data>
+  <data name="Lang_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Lang_Vietnamese" xml:space="preserve">
+    <value>Tiếng Việt</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Tối</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Sáng</value>
+  </data>
+  <data name="Theme_System" xml:space="preserve">
+    <value>Theo Windows</value>
+  </data>
+  <data name="Home_Tab" xml:space="preserve">
+    <value>Trang chủ</value>
+  </data>
+  <data name="Home_Title" xml:space="preserve">
+    <value>Chào mừng đến với PDF Editor</value>
+  </data>
+  <data name="Home_Subtitle" xml:space="preserve">
+    <value>Xem, chỉnh sửa, nhận xét, ký và chuyển đổi PDF — nhanh, riêng tư, ngay trên máy của bạn.</value>
+  </data>
+  <data name="Home_Open" xml:space="preserve">
+    <value>Mở file</value>
+  </data>
+  <data name="Home_OpenDesc" xml:space="preserve">
+    <value>Mở một hoặc nhiều file PDF</value>
+  </data>
+  <data name="Home_New" xml:space="preserve">
+    <value>PDF trắng</value>
+  </data>
+  <data name="Home_NewDesc" xml:space="preserve">
+    <value>Bắt đầu từ một trang A4 trắng</value>
+  </data>
+  <data name="Home_Combine" xml:space="preserve">
+    <value>Kết hợp file</value>
+  </data>
+  <data name="Home_CombineDesc" xml:space="preserve">
+    <value>Gộp nhiều PDF thành một</value>
+  </data>
+  <data name="Home_Images" xml:space="preserve">
+    <value>Ảnh sang PDF</value>
+  </data>
+  <data name="Home_ImagesDesc" xml:space="preserve">
+    <value>Tạo PDF từ ảnh chụp, ảnh scan</value>
+  </data>
+  <data name="Home_Drop" xml:space="preserve">
+    <value>Kéo thả file PDF vào bất kỳ đâu trong cửa sổ để mở</value>
+  </data>
+  <data name="Home_Recent" xml:space="preserve">
+    <value>File gần đây</value>
+  </data>
+  <data name="Home_NoRecent" xml:space="preserve">
+    <value>Chưa có file nào gần đây.</value>
+  </data>
+  <data name="Menu_File" xml:space="preserve">
+    <value>Tệp</value>
+  </data>
+  <data name="Menu_New" xml:space="preserve">
+    <value>Tạo PDF trắng</value>
+  </data>
+  <data name="Menu_Open" xml:space="preserve">
+    <value>Mở...</value>
+  </data>
+  <data name="Menu_Recent" xml:space="preserve">
+    <value>Mở gần đây</value>
+  </data>
+  <data name="Menu_RecentEmpty" xml:space="preserve">
+    <value>(Chưa có file gần đây)</value>
+  </data>
+  <data name="Menu_RecentClear" xml:space="preserve">
+    <value>Xóa danh sách</value>
+  </data>
+  <data name="Menu_Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Menu_SaveAs" xml:space="preserve">
+    <value>Lưu thành...</value>
+  </data>
+  <data name="Menu_Export" xml:space="preserve">
+    <value>Xuất file...</value>
+  </data>
+  <data name="Menu_Print" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="Menu_About" xml:space="preserve">
+    <value>Giới thiệu</value>
+  </data>
+  <data name="Menu_Close" xml:space="preserve">
+    <value>Đóng tài liệu</value>
+  </data>
+  <data name="Menu_Exit" xml:space="preserve">
+    <value>Thoát</value>
+  </data>
+  <data name="Menu_Undo" xml:space="preserve">
+    <value>Hoàn tác</value>
+  </data>
+  <data name="Menu_Redo" xml:space="preserve">
+    <value>Làm lại</value>
+  </data>
+  <data name="Menu_ConfirmOverwrite" xml:space="preserve">
+    <value>Hỏi trước khi ghi đè file gốc</value>
+  </data>
+  <data name="Menu_ZoomIn" xml:space="preserve">
+    <value>Phóng to</value>
+  </data>
+  <data name="Menu_ZoomOut" xml:space="preserve">
+    <value>Thu nhỏ</value>
+  </data>
+  <data name="Menu_ActualSize" xml:space="preserve">
+    <value>Cỡ thật</value>
+  </data>
+  <data name="Menu_FitPage" xml:space="preserve">
+    <value>Vừa trang</value>
+  </data>
+  <data name="Menu_FitWidth" xml:space="preserve">
+    <value>Vừa chiều rộng</value>
+  </data>
+  <data name="Menu_RotateRight" xml:space="preserve">
+    <value>Xoay phải 90°</value>
+  </data>
+  <data name="Menu_RotateLeft" xml:space="preserve">
+    <value>Xoay trái 90°</value>
+  </data>
+  <data name="Menu_InsertBlankPage" xml:space="preserve">
+    <value>Thêm trang trắng phía sau</value>
+  </data>
+  <data name="Menu_ImportPages" xml:space="preserve">
+    <value>Chèn trang từ file...</value>
+  </data>
+  <data name="Menu_DeletePage" xml:space="preserve">
+    <value>Xóa trang</value>
+  </data>
+  <data name="Menu_DuplicatePage" xml:space="preserve">
+    <value>Nhân bản trang</value>
+  </data>
+  <data name="Menu_ExtractPages" xml:space="preserve">
+    <value>Trích xuất trang...</value>
+  </data>
+  <data name="Menu_Split" xml:space="preserve">
+    <value>Tách file</value>
+  </data>
+  <data name="Menu_MovePageUp" xml:space="preserve">
+    <value>Đưa trang lên trước</value>
+  </data>
+  <data name="Menu_MovePageDown" xml:space="preserve">
+    <value>Đưa trang ra sau</value>
+  </data>
+  <data name="Ribbon_View" xml:space="preserve">
+    <value>Xem</value>
+  </data>
+  <data name="Ribbon_Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="Ribbon_Comment" xml:space="preserve">
+    <value>Nhận xét</value>
+  </data>
+  <data name="Ribbon_Pages" xml:space="preserve">
+    <value>Trang</value>
+  </data>
+  <data name="Ribbon_FillSign" xml:space="preserve">
+    <value>Điền &amp; Ký</value>
+  </data>
+  <data name="Ribbon_Protect" xml:space="preserve">
+    <value>Bảo vệ</value>
+  </data>
+  <data name="Ribbon_Convert" xml:space="preserve">
+    <value>Chuyển đổi</value>
+  </data>
+  <data name="Ribbon_Watermark" xml:space="preserve">
+    <value>Watermark</value>
+  </data>
+  <data name="Ribbon_RemoveWatermark" xml:space="preserve">
+    <value>Gỡ watermark</value>
+  </data>
+  <data name="Ribbon_HeaderFooter" xml:space="preserve">
+    <value>Đánh số trang</value>
+  </data>
+  <data name="Ribbon_RemoveHeaderFooter" xml:space="preserve">
+    <value>Gỡ số trang</value>
+  </data>
+  <data name="Ribbon_Organize" xml:space="preserve">
+    <value>Sắp xếp</value>
+  </data>
+  <data name="Ribbon_RotateLeft" xml:space="preserve">
+    <value>Xoay trái</value>
+  </data>
+  <data name="Ribbon_RotateRight" xml:space="preserve">
+    <value>Xoay phải</value>
+  </data>
+  <data name="Ribbon_InsertBlank" xml:space="preserve">
+    <value>Trang trắng</value>
+  </data>
+  <data name="Ribbon_InsertFile" xml:space="preserve">
+    <value>Chèn file</value>
+  </data>
+  <data name="Ribbon_Duplicate" xml:space="preserve">
+    <value>Nhân bản</value>
+  </data>
+  <data name="Ribbon_DeletePage" xml:space="preserve">
+    <value>Xóa trang</value>
+  </data>
+  <data name="Ribbon_MoveUp" xml:space="preserve">
+    <value>Lên trước</value>
+  </data>
+  <data name="Ribbon_MoveDown" xml:space="preserve">
+    <value>Ra sau</value>
+  </data>
+  <data name="Ribbon_Extract" xml:space="preserve">
+    <value>Trích xuất</value>
+  </data>
+  <data name="Ribbon_Sign" xml:space="preserve">
+    <value>Ký tên</value>
+  </data>
+  <data name="Ribbon_FormInfo" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="Ribbon_SetPassword" xml:space="preserve">
+    <value>Đặt mật khẩu</value>
+  </data>
+  <data name="Ribbon_RemovePassword" xml:space="preserve">
+    <value>Gỡ mật khẩu</value>
+  </data>
+  <data name="Ribbon_ToPng" xml:space="preserve">
+    <value>Sang PNG</value>
+  </data>
+  <data name="Ribbon_ToJpg" xml:space="preserve">
+    <value>Sang JPG</value>
+  </data>
+  <data name="Ribbon_ToWord" xml:space="preserve">
+    <value>Sang Word</value>
+  </data>
+  <data name="Ribbon_ToText" xml:space="preserve">
+    <value>Sang TXT</value>
+  </data>
+  <data name="View_Continuous" xml:space="preserve">
+    <value>Cuộn liên tục</value>
+  </data>
+  <data name="View_Single" xml:space="preserve">
+    <value>Một trang</value>
+  </data>
+  <data name="View_TwoPage" xml:space="preserve">
+    <value>Hai trang</value>
+  </data>
+  <data name="View_Night" xml:space="preserve">
+    <value>Đọc ban đêm</value>
+  </data>
+  <data name="View_SidePanel" xml:space="preserve">
+    <value>Panel trái</value>
+  </data>
+  <data name="View_Properties" xml:space="preserve">
+    <value>Thuộc tính</value>
+  </data>
+  <data name="Tool_Select" xml:space="preserve">
+    <value>Chọn</value>
+  </data>
+  <data name="Tool_Hand" xml:space="preserve">
+    <value>Bàn tay</value>
+  </data>
+  <data name="Tool_EditContent" xml:space="preserve">
+    <value>Sửa nội dung</value>
+  </data>
+  <data name="Tool_AddText" xml:space="preserve">
+    <value>Thêm chữ</value>
+  </data>
+  <data name="Tool_AddImage" xml:space="preserve">
+    <value>Thêm ảnh</value>
+  </data>
+  <data name="Tool_PlaceImage" xml:space="preserve">
+    <value>Đặt ảnh</value>
+  </data>
+  <data name="Tool_Highlight" xml:space="preserve">
+    <value>Tô sáng</value>
+  </data>
+  <data name="Tool_Underline" xml:space="preserve">
+    <value>Gạch chân</value>
+  </data>
+  <data name="Tool_StrikeOut" xml:space="preserve">
+    <value>Gạch ngang</value>
+  </data>
+  <data name="Tool_Squiggly" xml:space="preserve">
+    <value>Gạch sóng</value>
+  </data>
+  <data name="Tool_Note" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Tool_Ink" xml:space="preserve">
+    <value>Bút vẽ</value>
+  </data>
+  <data name="Tool_Rectangle" xml:space="preserve">
+    <value>Hình chữ nhật</value>
+  </data>
+  <data name="Tool_Ellipse" xml:space="preserve">
+    <value>Hình elip</value>
+  </data>
+  <data name="Tool_Line" xml:space="preserve">
+    <value>Đường thẳng</value>
+  </data>
+  <data name="Tool_Arrow" xml:space="preserve">
+    <value>Mũi tên</value>
+  </data>
+  <data name="Tool_Eraser" xml:space="preserve">
+    <value>Tẩy</value>
+  </data>
+  <data name="Tool_Stamp" xml:space="preserve">
+    <value>Điền &amp; Ký</value>
+  </data>
+  <data name="Tool_Redact" xml:space="preserve">
+    <value>Che thông tin</value>
+  </data>
+  <data name="Tool_Check" xml:space="preserve">
+    <value>Dấu tích</value>
+  </data>
+  <data name="Tool_Cross" xml:space="preserve">
+    <value>Dấu X</value>
+  </data>
+  <data name="Tool_Date" xml:space="preserve">
+    <value>Ngày</value>
+  </data>
+  <data name="Hint_Tool_Select" xml:space="preserve">
+    <value>Bôi đen chữ để sao chép / tô sáng; bấm vào liên kết, nhận xét</value>
+  </data>
+  <data name="Hint_Tool_Hand" xml:space="preserve">
+    <value>Kéo để cuộn tài liệu</value>
+  </data>
+  <data name="Hint_Tool_EditContent" xml:space="preserve">
+    <value>Bấm vào chữ, ảnh, hình để di chuyển, đổi cỡ, sửa hoặc xóa</value>
+  </data>
+  <data name="Hint_Tool_AddText" xml:space="preserve">
+    <value>Bấm lên trang tại vị trí muốn đặt chữ</value>
+  </data>
+  <data name="Hint_Tool_PlaceImage" xml:space="preserve">
+    <value>Bấm lên trang để đặt ảnh</value>
+  </data>
+  <data name="Hint_Tool_Highlight" xml:space="preserve">
+    <value>Kéo qua chữ để tô sáng</value>
+  </data>
+  <data name="Hint_Tool_Underline" xml:space="preserve">
+    <value>Kéo qua chữ để gạch chân</value>
+  </data>
+  <data name="Hint_Tool_StrikeOut" xml:space="preserve">
+    <value>Kéo qua chữ để gạch ngang</value>
+  </data>
+  <data name="Hint_Tool_Squiggly" xml:space="preserve">
+    <value>Kéo qua chữ để gạch sóng</value>
+  </data>
+  <data name="Hint_Tool_Note" xml:space="preserve">
+    <value>Bấm lên trang để thêm ghi chú</value>
+  </data>
+  <data name="Hint_Tool_Ink" xml:space="preserve">
+    <value>Kéo chuột để vẽ tự do</value>
+  </data>
+  <data name="Hint_Tool_Rectangle" xml:space="preserve">
+    <value>Kéo để vẽ hình chữ nhật</value>
+  </data>
+  <data name="Hint_Tool_Ellipse" xml:space="preserve">
+    <value>Kéo để vẽ hình elip</value>
+  </data>
+  <data name="Hint_Tool_Line" xml:space="preserve">
+    <value>Kéo để vẽ đường thẳng</value>
+  </data>
+  <data name="Hint_Tool_Arrow" xml:space="preserve">
+    <value>Kéo để vẽ mũi tên</value>
+  </data>
+  <data name="Hint_Tool_Eraser" xml:space="preserve">
+    <value>Bấm vào nhận xét / nét vẽ để xóa</value>
+  </data>
+  <data name="Hint_Tool_Stamp" xml:space="preserve">
+    <value>Bấm lên trang để đặt</value>
+  </data>
+  <data name="Hint_Tool_Redact" xml:space="preserve">
+    <value>Kéo chọn vùng cần che, rồi bấm Áp dụng che</value>
+  </data>
+  <data name="Tip_Open" xml:space="preserve">
+    <value>Mở PDF (Ctrl+O)</value>
+  </data>
+  <data name="Tip_Save" xml:space="preserve">
+    <value>Lưu (Ctrl+S)</value>
+  </data>
+  <data name="Tip_Undo" xml:space="preserve">
+    <value>Hoàn tác (Ctrl+Z)</value>
+  </data>
+  <data name="Tip_Redo" xml:space="preserve">
+    <value>Làm lại (Ctrl+Y)</value>
+  </data>
+  <data name="Tip_Print" xml:space="preserve">
+    <value>In (Ctrl+P)</value>
+  </data>
+  <data name="Tip_Theme" xml:space="preserve">
+    <value>Đổi giao diện sáng / tối</value>
+  </data>
+  <data name="Tip_PreviousPage" xml:space="preserve">
+    <value>Trang trước (Ctrl+PgUp)</value>
+  </data>
+  <data name="Tip_NextPage" xml:space="preserve">
+    <value>Trang sau (Ctrl+PgDn)</value>
+  </data>
+  <data name="Tip_PageNumber" xml:space="preserve">
+    <value>Số trang — nhập rồi nhấn Enter</value>
+  </data>
+  <data name="Tip_ZoomOut" xml:space="preserve">
+    <value>Thu nhỏ (Ctrl+-)</value>
+  </data>
+  <data name="Tip_ZoomIn" xml:space="preserve">
+    <value>Phóng to (Ctrl++)</value>
+  </data>
+  <data name="Tip_Zoom" xml:space="preserve">
+    <value>Mức zoom</value>
+  </data>
+  <data name="Tip_FitWidth" xml:space="preserve">
+    <value>Vừa chiều rộng (Ctrl+2)</value>
+  </data>
+  <data name="Tip_FitPage" xml:space="preserve">
+    <value>Vừa trang (Ctrl+0)</value>
+  </data>
+  <data name="Tip_Tool_Select" xml:space="preserve">
+    <value>Chọn chữ, liên kết, nhận xét (Alt+1)</value>
+  </data>
+  <data name="Tip_Tool_Hand" xml:space="preserve">
+    <value>Kéo để cuộn</value>
+  </data>
+  <data name="Tip_Tool_EditContent" xml:space="preserve">
+    <value>Sửa chữ, ảnh, hình (Alt+2)</value>
+  </data>
+  <data name="Tip_AddTextTool" xml:space="preserve">
+    <value>Thêm chữ (Ctrl+T)</value>
+  </data>
+  <data name="Tip_SearchNext" xml:space="preserve">
+    <value>Kết quả sau (F3)</value>
+  </data>
+  <data name="Tip_SearchPrevious" xml:space="preserve">
+    <value>Kết quả trước (Shift+F3)</value>
+  </data>
+  <data name="Tip_Refresh" xml:space="preserve">
+    <value>Làm mới</value>
+  </data>
+  <data name="Toolbar_PageCount" xml:space="preserve">
+    <value>/ {0}</value>
+  </data>
+  <data name="Panel_Pages" xml:space="preserve">
+    <value>Trang</value>
+  </data>
+  <data name="Panel_Bookmarks" xml:space="preserve">
+    <value>Mục lục</value>
+  </data>
+  <data name="Panel_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Panel_Comments" xml:space="preserve">
+    <value>Nhận xét</value>
+  </data>
+  <data name="Panel_Properties" xml:space="preserve">
+    <value>Thuộc tính</value>
+  </data>
+  <data name="Panel_Content" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="Panel_Font" xml:space="preserve">
+    <value>Phông chữ</value>
+  </data>
+  <data name="Panel_Size" xml:space="preserve">
+    <value>Cỡ chữ (pt)</value>
+  </data>
+  <data name="Panel_Bold" xml:space="preserve">
+    <value>In đậm</value>
+  </data>
+  <data name="Panel_Italic" xml:space="preserve">
+    <value>In nghiêng</value>
+  </data>
+  <data name="Panel_Apply" xml:space="preserve">
+    <value>Áp dụng</value>
+  </data>
+  <data name="Panel_ApplyTip" xml:space="preserve">
+    <value>Áp dụng thay đổi (Ctrl+Enter)</value>
+  </data>
+  <data name="Panel_Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Panel_OriginalFont" xml:space="preserve">
+    <value>Font gốc: {0}</value>
+  </data>
+  <data name="Bookmarks_Empty" xml:space="preserve">
+    <value>Tài liệu không có mục lục.</value>
+  </data>
+  <data name="Comments_Empty" xml:space="preserve">
+    <value>Chưa có nhận xét. Dùng thẻ Nhận xét để tô sáng, vẽ hoặc thêm ghi chú.</value>
+  </data>
+  <data name="Comments_Header" xml:space="preserve">
+    <value>{0} · trang {1} · {2}</value>
+  </data>
+  <data name="Search_Placeholder" xml:space="preserve">
+    <value>Tìm trong tài liệu</value>
+  </data>
+  <data name="Search_IgnoreDiacritics" xml:space="preserve">
+    <value>Bỏ qua dấu</value>
+  </data>
+  <data name="Search_MatchCase" xml:space="preserve">
+    <value>Phân biệt hoa thường</value>
+  </data>
+  <data name="Search_WholeWord" xml:space="preserve">
+    <value>Cả từ</value>
+  </data>
+  <data name="Search_Count" xml:space="preserve">
+    <value>{0} kết quả</value>
+  </data>
+  <data name="Search_Searching" xml:space="preserve">
+    <value>Đang tìm… {0} kết quả</value>
+  </data>
+  <data name="Search_PageLabel" xml:space="preserve">
+    <value>Trang {0}</value>
+  </data>
+  <data name="Search_Position" xml:space="preserve">
+    <value>Kết quả {0}/{1}</value>
+  </data>
+  <data name="Organize_Title" xml:space="preserve">
+    <value>Sắp xếp trang</value>
+  </data>
+  <data name="Organize_Count" xml:space="preserve">
+    <value>Đã chọn {0}/{1} — kéo thả để đổi thứ tự</value>
+  </data>
+  <data name="Organize_Done" xml:space="preserve">
+    <value>Xong</value>
+  </data>
+  <data name="Organize_SelectFirst" xml:space="preserve">
+    <value>Hãy chọn một hoặc nhiều trang trước</value>
+  </data>
+  <data name="Props_Actions" xml:space="preserve">
+    <value>THAO TÁC</value>
+  </data>
+  <data name="Props_Copy" xml:space="preserve">
+    <value>Sao chép</value>
+  </data>
+  <data name="Props_SelectedText" xml:space="preserve">
+    <value>Chữ đang chọn</value>
+  </data>
+  <data name="Props_CommentText" xml:space="preserve">
+    <value>Nội dung nhận xét</value>
+  </data>
+  <data name="Props_SaveComment" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Props_AnnotInfo" xml:space="preserve">
+    <value>Trang {0} · {1} · {2}</value>
+  </data>
+  <data name="Props_Color" xml:space="preserve">
+    <value>MÀU</value>
+  </data>
+  <data name="Props_Width" xml:space="preserve">
+    <value>Độ dày: {0:0.#} pt</value>
+  </data>
+  <data name="Props_Opacity" xml:space="preserve">
+    <value>Độ đậm: {0}%</value>
+  </data>
+  <data name="Props_FillShape" xml:space="preserve">
+    <value>Tô nền hình</value>
+  </data>
+  <data name="Props_TextObject" xml:space="preserve">
+    <value>Khối chữ</value>
+  </data>
+  <data name="Props_ObjectInfo" xml:space="preserve">
+    <value>Vị trí: {0:0.#} × {1:0.#} mm
+Kích thước: {2:0.#} × {3:0.#} mm</value>
+  </data>
+  <data name="Props_QuickFill" xml:space="preserve">
+    <value>ĐIỀN NHANH</value>
+  </data>
+  <data name="Props_Signatures" xml:space="preserve">
+    <value>CHỮ KÝ</value>
+  </data>
+  <data name="Props_NewSignature" xml:space="preserve">
+    <value>Tạo chữ ký</value>
+  </data>
+  <data name="Props_UseSignature" xml:space="preserve">
+    <value>Bấm chọn rồi bấm lên trang để ký</value>
+  </data>
+  <data name="Props_ApplyRedactions" xml:space="preserve">
+    <value>Áp dụng che</value>
+  </data>
+  <data name="Props_ClearRedactions" xml:space="preserve">
+    <value>Bỏ chọn</value>
+  </data>
+  <data name="Props_RedactCount" xml:space="preserve">
+    <value>{0} vùng đang chờ che</value>
+  </data>
+  <data name="Hint_Document" xml:space="preserve">
+    <value>Mẹo: dùng các thẻ phía trên — Chỉnh sửa để sửa chữ và ảnh, Nhận xét để tô sáng và vẽ, Điền &amp; Ký để ký tên.</value>
+  </data>
+  <data name="Hint_TextSelection" xml:space="preserve">
+    <value>Ctrl+C để sao chép đoạn chữ đang chọn.</value>
+  </data>
+  <data name="Hint_AddText" xml:space="preserve">
+    <value>Chọn định dạng, bấm lên trang rồi gõ. Enter để xong, Shift+Enter để xuống dòng.</value>
+  </data>
+  <data name="Hint_PlaceImage" xml:space="preserve">
+    <value>Bấm lên trang để đặt ảnh, sau đó kéo tay nắm để đổi kích thước.</value>
+  </data>
+  <data name="Hint_EditContent" xml:space="preserve">
+    <value>Bấm để chọn. Kéo để di chuyển, kéo tay nắm để đổi cỡ, nhấp đúp chữ để sửa, Delete để xóa.</value>
+  </data>
+  <data name="Hint_Eraser" xml:space="preserve">
+    <value>Bấm vào nhận xét, tô sáng hoặc nét vẽ để xóa.</value>
+  </data>
+  <data name="Hint_TextObject" xml:space="preserve">
+    <value>Nhấp đúp chữ trên trang để sửa trực tiếp. Phím mũi tên để dịch chuyển.</value>
+  </data>
+  <data name="Hint_Object" xml:space="preserve">
+    <value>Kéo để di chuyển, kéo tay nắm để đổi cỡ (giữ Shift để giữ tỉ lệ), phím mũi tên để dịch chuyển.</value>
+  </data>
+  <data name="Hint_Sign" xml:space="preserve">
+    <value>Chọn chữ ký hoặc dấu điền nhanh, rồi bấm lên trang.</value>
+  </data>
+  <data name="Hint_Redact" xml:space="preserve">
+    <value>Trang được che sẽ chuyển thành ảnh để nội dung bị che bị xóa vĩnh viễn.</value>
+  </data>
+  <data name="Info_File" xml:space="preserve">
+    <value>Tệp</value>
+  </data>
+  <data name="Info_Pages" xml:space="preserve">
+    <value>Số trang</value>
+  </data>
+  <data name="Info_PageSize" xml:space="preserve">
+    <value>Khổ trang</value>
+  </data>
+  <data name="Info_PageSizeValue" xml:space="preserve">
+    <value>{0:0} × {1:0} mm</value>
+  </data>
+  <data name="Info_Version" xml:space="preserve">
+    <value>Phiên bản PDF</value>
+  </data>
+  <data name="Info_Title" xml:space="preserve">
+    <value>Tiêu đề</value>
+  </data>
+  <data name="Info_Author" xml:space="preserve">
+    <value>Tác giả</value>
+  </data>
+  <data name="Info_Security" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="Info_Forms" xml:space="preserve">
+    <value>Form điền được</value>
+  </data>
+  <data name="Security_None" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="Security_Protected" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="Security_WillProtect" xml:space="preserve">
+    <value>Sẽ đặt khi lưu</value>
+  </data>
+  <data name="Security_WillRemove" xml:space="preserve">
+    <value>Sẽ gỡ khi lưu</value>
+  </data>
+  <data name="Annot_Other" xml:space="preserve">
+    <value>Nhận xét</value>
+  </data>
+  <data name="Annot_Note" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Annot_FreeText" xml:space="preserve">
+    <value>Hộp chữ</value>
+  </data>
+  <data name="Annot_Line" xml:space="preserve">
+    <value>Đường thẳng</value>
+  </data>
+  <data name="Annot_Square" xml:space="preserve">
+    <value>Hình chữ nhật</value>
+  </data>
+  <data name="Annot_Circle" xml:space="preserve">
+    <value>Hình elip</value>
+  </data>
+  <data name="Annot_Polygon" xml:space="preserve">
+    <value>Đa giác</value>
+  </data>
+  <data name="Annot_Highlight" xml:space="preserve">
+    <value>Tô sáng</value>
+  </data>
+  <data name="Annot_Underline" xml:space="preserve">
+    <value>Gạch chân</value>
+  </data>
+  <data name="Annot_Squiggly" xml:space="preserve">
+    <value>Gạch sóng</value>
+  </data>
+  <data name="Annot_StrikeOut" xml:space="preserve">
+    <value>Gạch ngang</value>
+  </data>
+  <data name="Annot_Stamp" xml:space="preserve">
+    <value>Con dấu</value>
+  </data>
+  <data name="Annot_Ink" xml:space="preserve">
+    <value>Nét vẽ</value>
+  </data>
+  <data name="Obj_Unknown" xml:space="preserve">
+    <value>Đối tượng</value>
+  </data>
+  <data name="Obj_Text" xml:space="preserve">
+    <value>Khối chữ</value>
+  </data>
+  <data name="Obj_Path" xml:space="preserve">
+    <value>Hình vẽ</value>
+  </data>
+  <data name="Obj_Image" xml:space="preserve">
+    <value>Ảnh</value>
+  </data>
+  <data name="Obj_Shading" xml:space="preserve">
+    <value>Dải màu</value>
+  </data>
+  <data name="Obj_Form" xml:space="preserve">
+    <value>Nhóm đối tượng</value>
+  </data>
+  <data name="Status_Ready" xml:space="preserve">
+    <value>Sẵn sàng</value>
+  </data>
+  <data name="Status_Modified" xml:space="preserve">
+    <value>● Có thay đổi chưa lưu</value>
+  </data>
+  <data name="Status_Page" xml:space="preserve">
+    <value>Trang {0} / {1}</value>
+  </data>
+  <data name="Status_Working" xml:space="preserve">
+    <value>Đang xử lý…</value>
+  </data>
+  <data name="Status_Opening" xml:space="preserve">
+    <value>Đang mở file…</value>
+  </data>
+  <data name="Status_Opened" xml:space="preserve">
+    <value>Đã mở {0}</value>
+  </data>
+  <data name="Status_Saving" xml:space="preserve">
+    <value>Đang lưu…</value>
+  </data>
+  <data name="Status_Saved" xml:space="preserve">
+    <value>Đã lưu {0}</value>
+  </data>
+  <data name="Status_Exporting" xml:space="preserve">
+    <value>Đang xuất file…</value>
+  </data>
+  <data name="Status_ExportingPage" xml:space="preserve">
+    <value>Đang xuất trang {0}/{1}…</value>
+  </data>
+  <data name="Status_Printed" xml:space="preserve">
+    <value>Đã gửi lệnh in</value>
+  </data>
+  <data name="Status_Copied" xml:space="preserve">
+    <value>Đã sao chép</value>
+  </data>
+  <data name="Status_TextAdded" xml:space="preserve">
+    <value>Đã thêm chữ</value>
+  </data>
+  <data name="Status_TextUpdated" xml:space="preserve">
+    <value>Đã sửa chữ</value>
+  </data>
+  <data name="Status_ObjectMoved" xml:space="preserve">
+    <value>Đã cập nhật đối tượng</value>
+  </data>
+  <data name="Status_ObjectDeleted" xml:space="preserve">
+    <value>Đã xóa đối tượng</value>
+  </data>
+  <data name="Status_ImageInserted" xml:space="preserve">
+    <value>Đã chèn ảnh</value>
+  </data>
+  <data name="Status_AnnotationAdded" xml:space="preserve">
+    <value>Đã thêm nhận xét</value>
+  </data>
+  <data name="Status_AnnotationDeleted" xml:space="preserve">
+    <value>Đã xóa nhận xét</value>
+  </data>
+  <data name="Status_CommentSaved" xml:space="preserve">
+    <value>Đã lưu nhận xét</value>
+  </data>
+  <data name="Status_FormFilled" xml:space="preserve">
+    <value>Đã điền form</value>
+  </data>
+  <data name="Status_SignaturePlaced" xml:space="preserve">
+    <value>Đã ký</value>
+  </data>
+  <data name="Status_PagesRotated" xml:space="preserve">
+    <value>Đã xoay {0} trang thêm {1}°</value>
+  </data>
+  <data name="Status_PagesDeleted" xml:space="preserve">
+    <value>Đã xóa {0} trang</value>
+  </data>
+  <data name="Status_PagesDuplicated" xml:space="preserve">
+    <value>Đã nhân bản {0} trang</value>
+  </data>
+  <data name="Status_PagesMoved" xml:space="preserve">
+    <value>Đã di chuyển trang</value>
+  </data>
+  <data name="Status_PageInserted" xml:space="preserve">
+    <value>Đã thêm trang trắng {0}</value>
+  </data>
+  <data name="Status_PagesImported" xml:space="preserve">
+    <value>Đã chèn {0} trang</value>
+  </data>
+  <data name="Status_PagesExtracted" xml:space="preserve">
+    <value>Đã trích xuất {0} trang ra {1}</value>
+  </data>
+  <data name="Status_Split" xml:space="preserve">
+    <value>Đã tạo {0} file</value>
+  </data>
+  <data name="Status_WatermarkAdded" xml:space="preserve">
+    <value>Đã thêm watermark</value>
+  </data>
+  <data name="Status_WatermarkRemoved" xml:space="preserve">
+    <value>Đã gỡ watermark</value>
+  </data>
+  <data name="Status_HeaderFooterAdded" xml:space="preserve">
+    <value>Đã đánh số trang</value>
+  </data>
+  <data name="Status_HeaderFooterRemoved" xml:space="preserve">
+    <value>Đã gỡ số trang</value>
+  </data>
+  <data name="Status_PasswordSet" xml:space="preserve">
+    <value>Mật khẩu sẽ được áp dụng khi lưu</value>
+  </data>
+  <data name="Status_PasswordRemoved" xml:space="preserve">
+    <value>Mật khẩu sẽ được gỡ khi lưu</value>
+  </data>
+  <data name="Status_NoPassword" xml:space="preserve">
+    <value>Tài liệu không có mật khẩu</value>
+  </data>
+  <data name="Status_Redacted" xml:space="preserve">
+    <value>Đã che thông tin trên {0} trang</value>
+  </data>
+  <data name="Status_Undone" xml:space="preserve">
+    <value>Đã hoàn tác</value>
+  </data>
+  <data name="Status_Redone" xml:space="preserve">
+    <value>Đã làm lại</value>
+  </data>
+  <data name="Banner_Forms" xml:space="preserve">
+    <value>Tài liệu có form điền được — bấm vào ô để điền.</value>
+  </data>
+  <data name="Forms_None" xml:space="preserve">
+    <value>Tài liệu không có form điền được.</value>
+  </data>
+  <data name="Filter_Pdf" xml:space="preserve">
+    <value>Tệp PDF (*.pdf)|*.pdf</value>
+  </data>
+  <data name="Filter_Text" xml:space="preserve">
+    <value>Tệp văn bản (*.txt)|*.txt</value>
+  </data>
+  <data name="Filter_Word" xml:space="preserve">
+    <value>Tài liệu Word (*.docx)|*.docx</value>
+  </data>
+  <data name="Filter_Images" xml:space="preserve">
+    <value>Ảnh</value>
+  </data>
+  <data name="Dialog_OpenTitle" xml:space="preserve">
+    <value>Mở file PDF</value>
+  </data>
+  <data name="Dialog_SaveTitle" xml:space="preserve">
+    <value>Lưu file PDF</value>
+  </data>
+  <data name="Dialog_ImportTitle" xml:space="preserve">
+    <value>Chọn PDF để chèn</value>
+  </data>
+  <data name="Dialog_ExportTitle" xml:space="preserve">
+    <value>Xuất file</value>
+  </data>
+  <data name="Dialog_ExportFolderTitle" xml:space="preserve">
+    <value>Chọn thư mục</value>
+  </data>
+  <data name="Dialog_InsertImageTitle" xml:space="preserve">
+    <value>Chọn ảnh</value>
+  </data>
+  <data name="Msg_SaveChanges" xml:space="preserve">
+    <value>Bạn có muốn lưu thay đổi của "{0}" không?</value>
+  </data>
+  <data name="Msg_ConfirmOverwrite" xml:space="preserve">
+    <value>Ghi đè file gốc "{0}" bằng nội dung đã chỉnh sửa?</value>
+  </data>
+  <data name="Msg_ConfirmDeletePages" xml:space="preserve">
+    <value>Xóa {0} trang? Có thể hoàn tác bằng Ctrl+Z.</value>
+  </data>
+  <data name="Msg_ExportedImages" xml:space="preserve">
+    <value>Đã xuất {0} ảnh vào {1}</value>
+  </data>
+  <data name="Msg_ExportedText" xml:space="preserve">
+    <value>Đã xuất ra {0}</value>
+  </data>
+  <data name="Note_Title" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Note_Prompt" xml:space="preserve">
+    <value>Nội dung ghi chú</value>
+  </data>
+  <data name="Extract_Prompt" xml:space="preserve">
+    <value>Các trang cần trích xuất (vd. 1-3, 5)</value>
+  </data>
+  <data name="Extract_Suffix" xml:space="preserve">
+    <value>trich-xuat</value>
+  </data>
+  <data name="Split_Prompt" xml:space="preserve">
+    <value>Tách tài liệu {0} trang thành các file, mỗi file bao nhiêu trang?</value>
+  </data>
+  <data name="Split_Invalid" xml:space="preserve">
+    <value>Nhập số từ 1 đến (số trang − 1).</value>
+  </data>
+  <data name="Redact_None" xml:space="preserve">
+    <value>Hãy đánh dấu vùng cần che bằng công cụ Che thông tin trước</value>
+  </data>
+  <data name="Redact_Confirm" xml:space="preserve">
+    <value>Xóa vĩnh viễn nội dung trong vùng đã đánh dấu trên {0} trang? Các trang này sẽ chuyển thành ảnh.</value>
+  </data>
+  <data name="Password_Title" xml:space="preserve">
+    <value>Cần mật khẩu</value>
+  </data>
+  <data name="Password_Message" xml:space="preserve">
+    <value>"{0}" được bảo vệ bằng mật khẩu. Nhập mật khẩu để mở.</value>
+  </data>
+  <data name="Password_Wrong" xml:space="preserve">
+    <value>Mật khẩu không đúng, vui lòng thử lại.</value>
+  </data>
+  <data name="Export_Title" xml:space="preserve">
+    <value>Xuất file</value>
+  </data>
+  <data name="Export_Format" xml:space="preserve">
+    <value>Định dạng</value>
+  </data>
+  <data name="Export_FormatPng" xml:space="preserve">
+    <value>Ảnh PNG (mỗi trang một file)</value>
+  </data>
+  <data name="Export_FormatJpg" xml:space="preserve">
+    <value>Ảnh JPG (mỗi trang một file)</value>
+  </data>
+  <data name="Export_FormatDocx" xml:space="preserve">
+    <value>Tài liệu Word (.docx)</value>
+  </data>
+  <data name="Export_FormatText" xml:space="preserve">
+    <value>Văn bản thuần (.txt)</value>
+  </data>
+  <data name="Export_Pages" xml:space="preserve">
+    <value>Trang</value>
+  </data>
+  <data name="Export_AllPages" xml:space="preserve">
+    <value>Tất cả các trang</value>
+  </data>
+  <data name="Export_CurrentPage" xml:space="preserve">
+    <value>Trang hiện tại ({0})</value>
+  </data>
+  <data name="Export_CustomPages" xml:space="preserve">
+    <value>Các trang:</value>
+  </data>
+  <data name="Export_RangeTip" xml:space="preserve">
+    <value>vd. 1-3, 5, 8-</value>
+  </data>
+  <data name="Export_Dpi" xml:space="preserve">
+    <value>Độ phân giải (DPI)</value>
+  </data>
+  <data name="Export_InvalidRange" xml:space="preserve">
+    <value>Phạm vi trang không hợp lệ. Ví dụ: 1-3, 5, 8-</value>
+  </data>
+  <data name="Export_Button" xml:space="preserve">
+    <value>Xuất</value>
+  </data>
+  <data name="Watermark_Title" xml:space="preserve">
+    <value>Thêm watermark</value>
+  </data>
+  <data name="Watermark_Text" xml:space="preserve">
+    <value>Nội dung watermark</value>
+  </data>
+  <data name="Watermark_Default" xml:space="preserve">
+    <value>BẢO MẬT</value>
+  </data>
+  <data name="Watermark_Rotation" xml:space="preserve">
+    <value>Góc xoay</value>
+  </data>
+  <data name="HeaderFooter_Title" xml:space="preserve">
+    <value>Đánh số trang / đầu &amp; chân trang</value>
+  </data>
+  <data name="HeaderFooter_Template" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="HeaderFooter_Default" xml:space="preserve">
+    <value>Trang {n} / {N}</value>
+  </data>
+  <data name="HeaderFooter_Hint" xml:space="preserve">
+    <value>{n} = số trang, {N} = tổng số trang, {date} = ngày hôm nay</value>
+  </data>
+  <data name="HeaderFooter_Position" xml:space="preserve">
+    <value>Vị trí</value>
+  </data>
+  <data name="Position_TopLeft" xml:space="preserve">
+    <value>Trên, trái</value>
+  </data>
+  <data name="Position_TopCenter" xml:space="preserve">
+    <value>Trên, giữa</value>
+  </data>
+  <data name="Position_TopRight" xml:space="preserve">
+    <value>Trên, phải</value>
+  </data>
+  <data name="Position_BottomLeft" xml:space="preserve">
+    <value>Dưới, trái</value>
+  </data>
+  <data name="Position_BottomCenter" xml:space="preserve">
+    <value>Dưới, giữa</value>
+  </data>
+  <data name="Position_BottomRight" xml:space="preserve">
+    <value>Dưới, phải</value>
+  </data>
+  <data name="Stamp_AllPages" xml:space="preserve">
+    <value>Tất cả các trang (hoặc vd. 1-3, 5)</value>
+  </data>
+  <data name="Stamp_EmptyText" xml:space="preserve">
+    <value>Vui lòng nhập nội dung.</value>
+  </data>
+  <data name="Protect_Title" xml:space="preserve">
+    <value>Bảo vệ bằng mật khẩu</value>
+  </data>
+  <data name="Protect_Description" xml:space="preserve">
+    <value>Ai mở file cũng cần mật khẩu này. Mã hóa AES-256. Được áp dụng khi lưu.</value>
+  </data>
+  <data name="Protect_Password" xml:space="preserve">
+    <value>Mật khẩu mở file</value>
+  </data>
+  <data name="Protect_Confirm" xml:space="preserve">
+    <value>Nhập lại mật khẩu</value>
+  </data>
+  <data name="Protect_OwnerPassword" xml:space="preserve">
+    <value>Mật khẩu phân quyền (không bắt buộc)</value>
+  </data>
+  <data name="Protect_Permissions" xml:space="preserve">
+    <value>QUYỀN</value>
+  </data>
+  <data name="Protect_AllowPrint" xml:space="preserve">
+    <value>Cho phép in</value>
+  </data>
+  <data name="Protect_AllowCopy" xml:space="preserve">
+    <value>Cho phép sao chép chữ</value>
+  </data>
+  <data name="Protect_AllowEdit" xml:space="preserve">
+    <value>Cho phép sửa và nhận xét</value>
+  </data>
+  <data name="Protect_TooShort" xml:space="preserve">
+    <value>Mật khẩu phải có ít nhất 4 ký tự.</value>
+  </data>
+  <data name="Protect_Mismatch" xml:space="preserve">
+    <value>Hai mật khẩu không khớp.</value>
+  </data>
+  <data name="Signature_Title" xml:space="preserve">
+    <value>Tạo chữ ký</value>
+  </data>
+  <data name="Signature_Draw" xml:space="preserve">
+    <value>Vẽ</value>
+  </data>
+  <data name="Signature_Type" xml:space="preserve">
+    <value>Gõ</value>
+  </data>
+  <data name="Signature_Clear" xml:space="preserve">
+    <value>Xóa nét</value>
+  </data>
+  <data name="Signature_DrawHint" xml:space="preserve">
+    <value>Ký bằng chuột, bút hoặc cảm ứng.</value>
+  </data>
+  <data name="Signature_NamePlaceholder" xml:space="preserve">
+    <value>Họ tên của bạn</value>
+  </data>
+  <data name="Signature_Empty" xml:space="preserve">
+    <value>Vui lòng vẽ hoặc gõ chữ ký.</value>
+  </data>
+  <data name="Signature_Save" xml:space="preserve">
+    <value>Lưu &amp; dùng</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="Settings_Theme" xml:space="preserve">
+    <value>Giao diện</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="Settings_Author" xml:space="preserve">
+    <value>Tên tác giả nhận xét</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>Giới thiệu PDF Editor</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>Phiên bản {0}</value>
+  </data>
+  <data name="About_Description" xml:space="preserve">
+    <value>Ứng dụng desktop Windows hiện đại để xem, chỉnh sửa, nhận xét, ký, bảo vệ và chuyển đổi PDF.</value>
+  </data>
+  <data name="About_DeveloperLabel" xml:space="preserve">
+    <value>Người phát triển</value>
+  </data>
+  <data name="About_Developer" xml:space="preserve">
+    <value>Nguyễn Thị Bích Lý</value>
+  </data>
+  <data name="About_StudentIdLabel" xml:space="preserve">
+    <value>MSSV</value>
+  </data>
+  <data name="About_StudentId" xml:space="preserve">
+    <value>50.01.902.066</value>
+  </data>
+  <data name="About_ClassLabel" xml:space="preserve">
+    <value>Lớp</value>
+  </data>
+  <data name="About_Class" xml:space="preserve">
+    <value>ST4 Ca 2</value>
+  </data>
+  <data name="About_TechLabel" xml:space="preserve">
+    <value>Công nghệ</value>
+  </data>
+  <data name="About_Tech" xml:space="preserve">
+    <value>C# · .NET 8 · WPF · WPF-UI (Fluent) · PDFium · PDFsharp</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="Error_Unexpected" xml:space="preserve">
+    <value>Đã xảy ra lỗi không mong muốn.</value>
+  </data>
+  <data name="Error_Unknown" xml:space="preserve">
+    <value>Lỗi không xác định khi xử lý PDF.</value>
+  </data>
+  <data name="Error_File" xml:space="preserve">
+    <value>Không đọc / ghi được file. Hãy kiểm tra file còn tồn tại và không bị chương trình khác khóa.</value>
+  </data>
+  <data name="Error_Format" xml:space="preserve">
+    <value>File không phải PDF (hoặc ảnh) hợp lệ, hoặc đã bị hỏng.</value>
+  </data>
+  <data name="Error_Password" xml:space="preserve">
+    <value>PDF được bảo vệ bằng mật khẩu.</value>
+  </data>
+  <data name="Error_Security" xml:space="preserve">
+    <value>PDF dùng cơ chế bảo mật không được hỗ trợ.</value>
+  </data>
+  <data name="Error_Page" xml:space="preserve">
+    <value>Không tìm thấy hoặc không xử lý được trang.</value>
+  </data>
+  <data name="Error_Save" xml:space="preserve">
+    <value>Không lưu được tài liệu.</value>
+  </data>
+  <data name="Error_Font" xml:space="preserve">
+    <value>Không nạp được phông chữ đã chọn.</value>
+  </data>
+  <data name="Error_Render" xml:space="preserve">
+    <value>Không hiển thị được trang (thiếu bộ nhớ?).</value>
+  </data>
+  <data name="Error_LastPage" xml:space="preserve">
+    <value>Tài liệu phải còn ít nhất một trang.</value>
+  </data>
+  <data name="Error_NotOpen" xml:space="preserve">
+    <value>Chưa mở tài liệu nào.</value>
+  </data>
+  <data name="Error_InvalidObject" xml:space="preserve">
+    <value>Đối tượng đã chọn không còn tồn tại. Vui lòng chọn lại.</value>
+  </data>
+  <data name="Error_Regeneration" xml:space="preserve">
+    <value>Không thể áp dụng thay đổi này một cách an toàn cho trang này.</value>
+  </data>
+  <data name="Error_FileNotFound" xml:space="preserve">
+    <value>Không tìm thấy file:
+{0}</value>
+  </data>
+</root>

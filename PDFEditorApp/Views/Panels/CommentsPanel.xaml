@@ -1,0 +1,36 @@
+<UserControl x:Class="PDFEditorApp.Views.Panels.CommentsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:p="clr-namespace:PDFEditorApp.Views.Panels"
+             xmlns:v="clr-namespace:PDFEditorApp.Views">
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Top" Margin="16,14,10,8">
+      <v:IconButton DockPanel.Dock="Right" Symbol="ArrowClockwise24" ToolTip="{v:Tr Tip_Refresh}" Click="OnRefreshClick" />
+      <TextBlock Style="{StaticResource PanelTitle}" VerticalAlignment="Center" Text="{v:Tr Panel_Comments}" />
+    </DockPanel>
+    <Grid>
+      <ListBox x:Name="List" Style="{StaticResource PanelList}" Padding="8,0,8,8" SelectionChanged="OnSelected">
+        <ListBox.ItemTemplate>
+          <DataTemplate DataType="{x:Type p:CommentItem}">
+            <DockPanel>
+              <v:IconButton DockPanel.Dock="Right" Symbol="Delete24" Width="28" Height="28" FontSize="15"
+                            ToolTip="{v:Tr Panel_Delete}" Click="OnDeleteClick" Tag="{Binding}" VerticalAlignment="Top" />
+              <Border DockPanel.Dock="Left" Width="4" CornerRadius="2" Margin="0,2,10,2" Background="{Binding Swatch}" />
+              <StackPanel>
+                <DockPanel>
+                  <ui:SymbolIcon DockPanel.Dock="Left" Symbol="{Binding Symbol}" FontSize="14" Margin="0,0,6,0"
+                                 Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                  <TextBlock FontSize="11" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding Header}" />
+                </DockPanel>
+                <TextBlock Margin="0,3,0,0" TextWrapping="Wrap" MaxHeight="64" TextTrimming="CharacterEllipsis" Text="{Binding Text}" />
+              </StackPanel>
+            </DockPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <TextBlock x:Name="EmptyText" Style="{StaticResource MutedText}" Margin="16,4" Visibility="Collapsed"
+                 Text="{v:Tr Comments_Empty}" />
+    </Grid>
+  </DockPanel>
+</UserControl>

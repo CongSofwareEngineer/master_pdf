@@ -1,0 +1,42 @@
+<ui:FluentWindow x:Class="PDFEditorApp.Views.SettingsDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:v="clr-namespace:PDFEditorApp.Views"
+                 Width="480" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+                 ExtendsContentIntoTitleBar="True" WindowBackdropType="Mica" WindowCornerPreference="Round"
+                 FontFamily="{StaticResource UiFont}" Title="{v:Tr Settings_Title}">
+  <StackPanel>
+    <ui:TitleBar Title="{v:Tr Settings_Title}" ShowMinimize="False" ShowMaximize="False" CanMaximize="False" />
+    <StackPanel Margin="22,6,22,20">
+      <ui:CardControl Icon="{ui:SymbolIcon DarkTheme24}" Margin="0,0,0,8">
+        <ui:CardControl.Header>
+          <TextBlock Text="{v:Tr Settings_Theme}" />
+        </ui:CardControl.Header>
+        <ComboBox x:Name="ThemeBox" MinWidth="150" SelectionChanged="OnThemeChanged" />
+      </ui:CardControl>
+      <ui:CardControl Icon="{ui:SymbolIcon LocalLanguage24}" Margin="0,0,0,8">
+        <ui:CardControl.Header>
+          <TextBlock Text="{v:Tr Settings_Language}" />
+        </ui:CardControl.Header>
+        <ComboBox x:Name="LanguageBox" MinWidth="150" />
+      </ui:CardControl>
+      <ui:CardControl Icon="{ui:SymbolIcon Person24}" Margin="0,0,0,8">
+        <ui:CardControl.Header>
+          <TextBlock Text="{v:Tr Settings_Author}" />
+        </ui:CardControl.Header>
+        <ui:TextBox x:Name="AuthorBox" MinWidth="180" />
+      </ui:CardControl>
+      <ui:CardControl Icon="{ui:SymbolIcon Save24}">
+        <ui:CardControl.Header>
+          <TextBlock Text="{v:Tr Menu_ConfirmOverwrite}" />
+        </ui:CardControl.Header>
+        <ui:ToggleSwitch x:Name="ConfirmSwitch" />
+      </ui:CardControl>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+        <ui:Button Appearance="Primary" IsDefault="True" MinWidth="96" Click="OnOkClick" Content="{v:Tr Common_OK}" />
+        <ui:Button Margin="8,0,0,0" IsCancel="True" MinWidth="96" Content="{v:Tr Common_Cancel}" />
+      </StackPanel>
+    </StackPanel>
+  </StackPanel>
+</ui:FluentWindow>

@@ -1,0 +1,39 @@
+<ui:FluentWindow x:Class="PDFEditorApp.Views.ExportDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:v="clr-namespace:PDFEditorApp.Views"
+                 Width="460" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+                 ExtendsContentIntoTitleBar="True" WindowBackdropType="Mica" WindowCornerPreference="Round"
+                 FontFamily="{StaticResource UiFont}" Title="{v:Tr Export_Title}">
+  <StackPanel>
+    <ui:TitleBar Title="{v:Tr Export_Title}" ShowMinimize="False" ShowMaximize="False" CanMaximize="False" />
+    <StackPanel Margin="22,6,22,20">
+      <TextBlock Style="{StaticResource FieldLabel}" Margin="0,0,0,6" Text="{v:Tr Export_Format}" />
+      <RadioButton x:Name="PngRadio" GroupName="Format" Margin="0,3" Checked="OnFormatChanged" Content="{v:Tr Export_FormatPng}" />
+      <RadioButton x:Name="JpgRadio" GroupName="Format" Margin="0,3" Checked="OnFormatChanged" Content="{v:Tr Export_FormatJpg}" />
+      <RadioButton x:Name="DocxRadio" GroupName="Format" Margin="0,3" Checked="OnFormatChanged" Content="{v:Tr Export_FormatDocx}" />
+      <RadioButton x:Name="TextRadio" GroupName="Format" Margin="0,3" Checked="OnFormatChanged" Content="{v:Tr Export_FormatText}" />
+
+      <TextBlock Style="{StaticResource FieldLabel}" Margin="0,16,0,6" Text="{v:Tr Export_Pages}" />
+      <RadioButton x:Name="AllPagesRadio" GroupName="Range" IsChecked="True" Margin="0,3" Content="{v:Tr Export_AllPages}" />
+      <RadioButton x:Name="CurrentPageRadio" GroupName="Range" Margin="0,3" />
+      <DockPanel Margin="0,3">
+        <RadioButton x:Name="CustomRadio" GroupName="Range" VerticalAlignment="Center" Content="{v:Tr Export_CustomPages}" />
+        <ui:TextBox x:Name="RangeBox" Margin="10,0,0,0" GotFocus="OnRangeFocus" PlaceholderText="{v:Tr Export_RangeTip}" />
+      </DockPanel>
+
+      <StackPanel x:Name="DpiPanel">
+        <TextBlock Style="{StaticResource FieldLabel}" Margin="0,16,0,6" Text="{v:Tr Export_Dpi}" />
+        <ComboBox x:Name="DpiBox" Width="140" HorizontalAlignment="Left" />
+      </StackPanel>
+
+      <TextBlock x:Name="ErrorText" Margin="0,10,0,0" Foreground="{DynamicResource DangerBrush}" TextWrapping="Wrap"
+                 Visibility="Collapsed" Text="{v:Tr Export_InvalidRange}" />
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+        <ui:Button Appearance="Primary" IsDefault="True" MinWidth="96" Click="OnOkClick" Content="{v:Tr Export_Button}" />
+        <ui:Button Margin="8,0,0,0" IsCancel="True" MinWidth="96" Content="{v:Tr Common_Cancel}" />
+      </StackPanel>
+    </StackPanel>
+  </StackPanel>
+</ui:FluentWindow>
