@@ -29,19 +29,23 @@ Phím tắt đầy đủ: [docs/ui-layout.md](docs/ui-layout.md).
 
 ## Chạy & build
 
-Cần **.NET SDK 8** (hoặc mới hơn) để phát triển. Máy chỉ chạy file `.exe` production thì không cần cài gì.
+Cần **.NET SDK 8** (hoặc mới hơn) để phát triển, và **Inno Setup 6.5+** để build bộ cài (`winget install JRSoftware.InnoSetup`).
+Máy người dùng chỉ cần chạy file `PDFEditor-Setup-….exe` để cài — không cần cài .NET.
 
 | Mục đích | Lệnh |
 |----------|------|
 | **Chạy dev (Debug)** | `dev.bat` — hoặc `dev.bat duong\dan\file.pdf` để mở sẵn file |
 | Chạy dev, tự build lại khi sửa code | `dev.bat watch` |
-| **Build production** | `build_windows.bat` → `dist\win-x64\PDFEditor.exe` (1 file, self-contained) |
+| **Build production (bộ cài)** | `build_windows.bat` → `dist\PDFEditor-Setup-<version>-win-x64.exe` |
 | Build cho Windows 32-bit / ARM | `build_windows.bat win-x86` / `build_windows.bat win-arm64` |
 | Chạy test | `test.bat` (= `dotnet test`) |
 | Lint (tự sửa format) | `lint.bat` |
 | Lint kiểm tra (phải 0 lỗi) | `lint.bat --check` |
 
-`build_windows.bat` chạy toàn bộ test trước; test lỗi thì dừng, không tạo exe. Đang chạy bản dev thì đóng app trước
+`build_windows.bat` chạy toàn bộ test trước; test lỗi thì dừng, không tạo bộ cài. Bộ cài (tiếng Việt / English) cho chọn
+cài cho riêng mình (không cần admin) hoặc cho mọi người, tạo shortcut Start menu / Desktop, thêm PDF Editor vào "Mở bằng"
+cho file `.pdf`, gỡ được trong *Settings → Apps*. Phiên bản lấy từ `<Version>` trong `PDFEditorApp.csproj`.
+Chi tiết: [docs/installer.md](docs/installer.md). Đang chạy bản dev thì đóng app trước
 khi build lại (file exe trong `bin\Debug` bị khóa). Chi tiết: [docs/build-tooling.md](docs/build-tooling.md).
 
 ## Cấu trúc dự án
@@ -50,6 +54,7 @@ khi build lại (file exe trong `bin\Debug` bị khóa). Chi tiết: [docs/build
 Master_PDF/
 ├── PDFEditorApp.sln
 ├── dev.bat · build_windows.bat · lint.bat · test.bat · scripts/env.bat
+├── installer/                    # bộ cài Inno Setup: PDFEditor.iss, Languages/Vietnamese.isl
 ├── global.json · Directory.Build.props · .editorconfig
 ├── docs/                         # log từng chức năng (mục lục: docs/log.md)
 ├── PDFEditorApp/

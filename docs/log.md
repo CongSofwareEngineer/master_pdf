@@ -31,6 +31,7 @@ Mỗi chức năng có **một file log riêng**. Trước khi code, đọc file
 | Đa ngôn ngữ (Strings.resx, đổi ngôn ngữ) | [i18n.md](i18n.md) |
 | Cài đặt người dùng (settings.json) | [settings.md](settings.md) |
 | Lệnh dev / build / lint / test | [build-tooling.md](build-tooling.md) |
+| Bộ cài đặt Windows (Setup.exe, Inno Setup) | [installer.md](installer.md) |
 
 ## Mẫu file log
 
