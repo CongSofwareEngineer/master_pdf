@@ -89,15 +89,18 @@ public sealed partial class PdfService
     /// <summary>
     /// Thay cả khối chữ bằng text mới (rỗng = xóa), giữ vị trí dòng đầu, khoảng cách dòng và lề. Khối là
     /// đoạn văn (<see cref="TextBlockInfo.WrapWidth"/> &gt; 0) → tự xuống dòng theo bề rộng cũ; '\n' = xuống dòng cứng.
-    /// Trả về chỉ số object đầu tiên mới tạo, -1 nếu đã xóa.
+    /// <paramref name="wrapWidth"/> &gt; 0 = đổi bề rộng tự xuống dòng (point; người dùng kéo rộng / hẹp ô
+    /// sửa), kể cả với khối một dòng (khối đó bắt đầu tự xuống dòng). Trả về chỉ số object đầu tiên mới tạo,
+    /// -1 nếu đã xóa.
     /// </summary>
-    public int UpdateTextBlock(int pageIndex, TextBlockInfo block, string text, TextStyle style)
+    public int UpdateTextBlock(int pageIndex, TextBlockInfo block, string text, TextStyle style, double wrapWidth = 0)
     {
         ArgumentNullException.ThrowIfNull(block);
         ArgumentNullException.ThrowIfNull(text);
         ArgumentNullException.ThrowIfNull(style);
+        var target = wrapWidth > 0 ? block with { WrapWidth = wrapWidth } : block;
         return EditObjects(pageIndex, block.ObjectIndices, textOnly: true,
-            (page, objs, overlay) => RewriteBlock(page, objs, block, text, style, overlay));
+            (page, objs, overlay) => RewriteBlock(page, objs, target, text, style, overlay));
     }
 
     public void DeleteTextBlock(int pageIndex, TextBlockInfo block)

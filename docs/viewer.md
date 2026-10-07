@@ -31,6 +31,10 @@ vừa chiều rộng, thumbnail tất cả các trang, chế độ đọc ban đ
 - **Thumbnail**: `ThumbnailLoader` — item hiện ra (`Loaded`) mới xếp hàng render, item mới nhất ưu tiên, một vòng
   render nền; dùng chung cho panel Trang và màn hình Sắp xếp trang. Sửa trang → render lại thumbnail trang đó.
 - **DPI**: chỉ xử lý `DpiChanged` khi chính cửa sổ đổi DPI (sự kiện nổi bọt từ visual con → tránh vòng lặp).
+- **Phím → công cụ**: `DocumentView.PreviewKeyDown` chuyển phím cho công cụ đang dùng (`Tool.OnKeyDown`), nhưng
+  **bỏ qua khi phím xuất phát từ một ô nhập đặt trên trang** (`e.OriginalSource is TextBoxBase or PasswordBox`:
+  ô sửa chữ trực tiếp, ô điền form). `PreviewKeyDown` đi từ ngoài vào trong nên nếu không bỏ qua, công cụ sẽ
+  "nuốt" phím trước khi ô nhập nhận được (Enter / Shift+Enter, mũi tên, Delete).
 
 ## Lưu ý / giới hạn
 - Không dùng DropShadowEffect cho trang (làm cuộn / zoom giật) — dùng viền 1 px.
@@ -49,3 +53,4 @@ vừa chiều rộng, thumbnail tất cả các trang, chế độ đọc ban đ
 | 2026-10-03 | `OnDpiChanged` chỉ xử lý khi chính cửa sổ đổi DPI | Màn hình 125%: DpiChanged nổi bọt từ thumbnail mới → dựng lại thumbnail → vòng lặp vô hạn, CPU 100%, trang không hiện |
 | 2026-10-03 | Thay `PdfViewer` (một trang) bằng `DocumentView` cuộn liên tục ảo hóa + `PageView` nhiều lớp; chế độ một / hai trang, đọc ban đêm, zoom quanh con trỏ | Trải nghiệm đọc như Acrobat / Edge |
 | 2026-10-03 | Vừa chiều rộng theo trang hiện tại; căn giữa theo từng trang (`CenterX`); viền trang thay bóng đổ | Trang ngang làm trang dọc lệch trái; mép trang khó thấy trên nền sáng |
+| 2026-10-07 | `PreviewKeyDown` không chuyển phím cho công cụ khi nguồn phím là ô nhập trên trang (`TextBoxBase` / `PasswordBox`) | Công cụ Sửa nội dung nuốt Enter / mũi tên / Delete của ô sửa chữ trực tiếp → không xuống dòng được |

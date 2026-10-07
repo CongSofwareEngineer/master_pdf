@@ -824,6 +824,9 @@ Kích thước: {2:0.#} × {3:0.#} mm</value>
   <data name="Status_TextUpdated" xml:space="preserve">
     <value>Đã sửa chữ</value>
   </data>
+  <data name="Tooltip_ResizeTextBox" xml:space="preserve">
+    <value>Kéo để đổi bề rộng ô sửa</value>
+  </data>
   <data name="Status_ObjectMoved" xml:space="preserve">
     <value>Đã cập nhật đối tượng</value>
   </data>

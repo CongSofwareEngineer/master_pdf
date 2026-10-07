@@ -12,25 +12,41 @@ namespace PDFEditorApp.Views.Tools;
 /// <summary>
 /// Ô sửa chữ trực tiếp trên trang (Enter = xong, Shift+Enter = xuống dòng, Esc = hủy). Sửa cả khối chữ:
 /// ô phủ hết khối; khối là đoạn văn thì ô có bề rộng cố định và tự xuống dòng
-/// giống khi ghi lại vào PDF.
+/// giống khi ghi lại vào PDF. Tay nắm ở mép phải cho phép kéo đổi bề rộng ô (và bề rộng tự xuống
+/// dòng khi ghi vào PDF).
 /// </summary>
 internal sealed class InlineTextEditor
 {
+    /// <summary>Bề rộng tay nắm kéo ở mép phải ô (DIP).</summary>
+    private const double GripWidth = 7;
+
+    /// <summary>Chênh lệch giữa bề rộng ô và bề rộng chữ bên trong (padding + viền, DIP).</summary>
+    private const double BoxExtra = 10;
+
     private readonly TextBox _box;
-    private readonly Action<string> _commit;
+    private readonly Canvas _layer;
+    private readonly Rectangle? _grip;
+    private readonly double _scale;
+    private readonly Action<string, double> _commit;
+    private double _newWrapViewWidth;
+    private bool _resizing;
+    private double _dragStartX;
+    private double _dragStartWidth;
     private bool _done;
 
     private InlineTextEditor(PageView page, PointD viewPoint, string text, TextStyle style, double minViewWidth,
-        double wrapViewWidth, double lineHeight, Action<string> commit)
+        double wrapViewWidth, double lineHeight, bool resizable, Action<string, double> commit)
     {
         _commit = commit;
+        _layer = page.ToolLayer;
+        _scale = page.Scale;
         var wrap = wrapViewWidth > 0;
         _box = new TextBox
         {
             Text = text,
             AcceptsReturn = true,
             TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap,
-            MinWidth = Math.Max(60, minViewWidth * page.Scale) + 10,
+            MinWidth = Math.Max(60, minViewWidth * page.Scale) + BoxExtra,
             Padding = new Thickness(1),
             BorderThickness = new Thickness(1.5),
             Background = new SolidColorBrush(Color.FromArgb(240, 255, 255, 255)),
@@ -44,7 +60,7 @@ internal sealed class InlineTextEditor
         };
         if (wrap)
         {
-            _box.Width = _box.MinWidth = Math.Max(60, wrapViewWidth * page.Scale) + 10;
+            _box.Width = _box.MinWidth = Math.Max(60, wrapViewWidth * page.Scale) + BoxExtra;
         }
 
         if (lineHeight > 0)
@@ -56,25 +72,106 @@ internal sealed class InlineTextEditor
         _box.SetResourceReference(Control.BorderBrushProperty, "AccentBrandBrush");
         Canvas.SetLeft(_box, (viewPoint.X * page.Scale) - 3);
         Canvas.SetTop(_box, (viewPoint.Y * page.Scale) - 3);
-        page.ToolLayer.Children.Add(_box);
+        _layer.Children.Add(_box);
         _box.PreviewKeyDown += OnKeyDown;
-        _box.LostKeyboardFocus += (_, _) => Finish(commit: true);
+        // Đang kéo tay nắm thì ô có thể mất focus bàn phím → chưa phải lúc đóng ô.
+        _box.LostKeyboardFocus += (_, _) =>
+        {
+            if (!_resizing)
+            {
+                Finish(commit: true);
+            }
+        };
         _box.Loaded += (_, _) =>
         {
             _box.Focus();
             _box.SelectAll();
         };
+        if (resizable)
+        {
+            _grip = CreateGrip();
+            _box.SizeChanged += (_, _) => PlaceGrip();
+        }
     }
 
     public static InlineTextEditor Open(PageView page, PointD viewPoint, string text, TextStyle style, double minViewWidth, Action<string> commit) =>
-        new(page, viewPoint, text, style, minViewWidth, 0, 0, commit);
+        new(page, viewPoint, text, style, minViewWidth, 0, 0, resizable: false, (value, _) => commit(value));
 
-    /// <summary>Sửa một khối chữ có sẵn (dòng / đoạn văn).</summary>
-    public static InlineTextEditor OpenBlock(PageView page, TextBlockInfo block, TextStyle style, Action<string> commit)
+    /// <summary>
+    /// Sửa một khối chữ có sẵn (dòng / đoạn văn). <paramref name="commit"/> nhận text mới và bề rộng tự
+    /// xuống dòng mới (point, hệ view; 0 = người dùng không kéo đổi bề rộng).
+    /// </summary>
+    public static InlineTextEditor OpenBlock(PageView page, TextBlockInfo block, TextStyle style, Action<string, double> commit)
     {
         var sizeScale = style.FontSize / Math.Max(1e-6, block.Style.FontSize);
         return new(page, new PointD(block.ViewBounds.X, block.ViewBounds.Y), block.Text, style, block.ViewBounds.Width,
-            block.WrapWidth > 0 ? block.ViewBounds.Width : 0, block.LineHeight * sizeScale, commit);
+            block.WrapWidth > 0 ? block.ViewBounds.Width : 0, block.LineHeight * sizeScale, resizable: true, commit);
+    }
+
+    /// <summary>Tay nắm ở mép phải ô: kéo ngang để đổi bề rộng ô (chữ tự xuống dòng theo bề rộng mới).</summary>
+    private Rectangle CreateGrip()
+    {
+        var grip = new Rectangle
+        {
+            Width = GripWidth,
+            Height = 10,
+            Cursor = Cursors.SizeWE,
+            Opacity = 0.85,
+            ToolTip = Loc.Get("Tooltip_ResizeTextBox"),
+        };
+        grip.SetResourceReference(Shape.FillProperty, "AccentBrandBrush");
+        grip.MouseLeftButtonDown += (_, e) =>
+        {
+            _resizing = true;
+            _dragStartX = e.GetPosition(_layer).X;
+            _dragStartWidth = _box.ActualWidth;
+            grip.CaptureMouse();
+            e.Handled = true;
+        };
+        grip.MouseMove += (_, e) =>
+        {
+            if (_resizing)
+            {
+                SetWidth(_dragStartWidth + e.GetPosition(_layer).X - _dragStartX);
+                e.Handled = true;
+            }
+        };
+        grip.MouseLeftButtonUp += (_, e) =>
+        {
+            if (_resizing)
+            {
+                _resizing = false;
+                grip.ReleaseMouseCapture();
+                _box.Focus();
+                e.Handled = true;
+            }
+        };
+        _layer.Children.Add(grip);
+        _ = _layer.Dispatcher.BeginInvoke(PlaceGrip);
+        return grip;
+    }
+
+    /// <summary>Đặt tay nắm sát mép phải ô (gọi lại mỗi khi ô đổi kích thước).</summary>
+    private void PlaceGrip()
+    {
+        if (_grip is null)
+        {
+            return;
+        }
+
+        _grip.Height = Math.Max(10, _box.ActualHeight);
+        Canvas.SetLeft(_grip, Canvas.GetLeft(_box) + Math.Max(0, _box.ActualWidth) - 1);
+        Canvas.SetTop(_grip, Canvas.GetTop(_box));
+    }
+
+    /// <summary>Đổi bề rộng ô (DIP) → ô tự xuống dòng theo bề rộng đó, và nhớ lại để ghi vào PDF.</summary>
+    private void SetWidth(double widthDip)
+    {
+        var width = Math.Max(GripWidth + BoxExtra + 20, widthDip);
+        _box.MinWidth = 0;
+        _box.Width = width;
+        _box.TextWrapping = TextWrapping.Wrap;
+        _newWrapViewWidth = Math.Max(1, (width - BoxExtra) / _scale);
     }
 
     private void OnKeyDown(object sender, KeyEventArgs e)
@@ -100,14 +197,16 @@ internal sealed class InlineTextEditor
 
         _done = true;
         var text = _box.Text;
-        if (_box.Parent is Canvas c)
+        _layer.Children.Remove(_box);
+        if (_grip is not null)
         {
-            c.Children.Remove(_box);
+            _grip.ReleaseMouseCapture();
+            _layer.Children.Remove(_grip);
         }
 
         if (commit)
         {
-            _commit(text);
+            _commit(text, _newWrapViewWidth);
         }
     }
 }
@@ -382,14 +481,14 @@ public sealed class EditContentTool(IToolHost host) : Tool(host)
     private void EditTextInline(PageView pv, int page, TextBlockInfo block)
     {
         var style = Host.Options.TextStyle;
-        InlineTextEditor.OpenBlock(pv, block, style, value =>
+        InlineTextEditor.OpenBlock(pv, block, style, (value, wrapWidth) =>
         {
-            if (value == block.Text && style == block.Style)
+            if (value == block.Text && style == block.Style && wrapWidth <= 0)
             {
                 return;
             }
 
-            _ = Host.EditAsync(page, () => Host.Pdf.UpdateTextBlock(page, block, value, style), "Status_TextUpdated",
+            _ = Host.EditAsync(page, () => Host.Pdf.UpdateTextBlock(page, block, value, style, wrapWidth), "Status_TextUpdated",
                 newIndex => Host.SelectObjectAfterEdit(page, newIndex));
         });
     }

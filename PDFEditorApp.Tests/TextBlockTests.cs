@@ -258,6 +258,49 @@ public class TextBlockTests
         Near(block.LineHeight, lines[2].ViewBounds.Y - lines[1].ViewBounds.Y, 3);
     }
 
+    /// <summary>Kéo rộng ô sửa → đoạn văn chảy lại theo bề rộng mới (không phải bề rộng gốc).</summary>
+    [Fact]
+    public void UpdateTextBlock_NewWrapWidth_RewrapsToNewWidth()
+    {
+        using var pdf = NewService();
+        pdf.CreateNew();
+        pdf.AddText(0, 72, 100, "The quick brown fox jumps over\nthe lazy dog and keeps running", Style());
+        var block = Assert.Single(pdf.GetTextBlocks(0));
+        Assert.True(block.WrapWidth > 0);
+
+        var text = "The quick brown fox jumps over the lazy dog and keeps running far away into the deep green forest";
+        var wider = block.WrapWidth * 2;
+        pdf.UpdateTextBlock(0, block, text, block.Style, wider);
+
+        using var reopened = Open(pdf.SaveToBytes());
+        var lines = reopened.GetTextObjects(0).OrderBy(o => o.ViewBounds.Y).ToList();
+        Assert.Equal(text, string.Join(' ', lines.Select(l => l.Text)));
+        Assert.All(lines, l => Assert.True(l.ViewBounds.Width <= (wider * 1.02) + 2));
+        // Có dòng rộng hơn bề rộng gốc → đã dùng bề rộng mới.
+        Assert.Contains(lines, l => l.ViewBounds.Width > block.WrapWidth * 1.1);
+    }
+
+    /// <summary>Khối một dòng: kéo hẹp ô sửa → chữ bắt đầu tự xuống dòng theo bề rộng đó.</summary>
+    [Fact]
+    public void UpdateTextBlock_SingleLine_NewWrapWidth_StartsWrapping()
+    {
+        using var pdf = NewService();
+        pdf.CreateNew();
+        pdf.AddText(0, 72, 100, "Hello world", Style());
+        var block = Assert.Single(pdf.GetTextBlocks(0));
+        Assert.Equal(0, block.WrapWidth);
+
+        var text = "The quick brown fox jumps over the lazy dog";
+        pdf.UpdateTextBlock(0, block, text, block.Style, block.ViewBounds.Width);
+
+        using var reopened = Open(pdf.SaveToBytes());
+        var lines = reopened.GetTextObjects(0).OrderBy(o => o.ViewBounds.Y).ToList();
+        Assert.True(lines.Count > 1);
+        Assert.Equal(text, string.Join(' ', lines.Select(l => l.Text)));
+        Assert.All(lines, l => Assert.True(l.ViewBounds.Width <= (block.ViewBounds.Width * 1.02) + 2));
+        Assert.All(lines, l => Near(block.ViewBounds.X, l.ViewBounds.X));
+    }
+
     [Fact]
     public void DeleteAndMoveTextBlock_AffectWholeBlock()
     {

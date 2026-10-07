@@ -16,7 +16,7 @@ Sửa text có sẵn, thêm text mới, xóa / di chuyển text; định dạng 
 - `Services/FontService.cs` — chọn font chuẩn PDF hoặc file TrueType của Windows; đoán family từ tên font PDF.
 - `Views/Tools/ContentTools.cs` — `EditContentTool` (chọn / kéo / nhấp đúp sửa, chung với ảnh & hình — xem
   page-objects.md; `FindTarget` ưu tiên khối chữ), `AddTextTool`, `InlineTextEditor` (ô sửa trực tiếp trên trang;
-  `OpenBlock` cho khối chữ có sẵn).
+  `OpenBlock` cho khối chữ có sẵn, kèm tay nắm kéo đổi bề rộng ô).
 - `Views/Panels/PropertiesPanel.xaml(.cs)` — nội dung + định dạng (font, cỡ, đậm, nghiêng, màu) của chữ đang chọn / chữ mới.
 - `Views/DocumentWorkspace(.Commands).cs` — `EditAsync`, nối công cụ / panel với `PdfService`.
 
@@ -51,14 +51,28 @@ Sửa text có sẵn, thêm text mới, xóa / di chuyển text; định dạng 
   `VerifyPage` như sửa một object): gỡ (hoặc phủ) mọi object của khối, rồi ghi lại từ gốc chữ của mảnh đầu,
   cùng hướng; dòng sau lùi `LineHeight` (đổi cỡ chữ thì co giãn theo), lề các dòng sau = lề gốc của dòng 2.
   `WrapWidth` > 0 → tự xuống dòng theo từ (`LayoutBlock`, đo bằng `MeasureText` với font sẽ dùng, cho lệch 2%);
+  `UpdateTextBlock(..., wrapWidth)` với wrapWidth > 0 → dùng bề rộng đó thay cho `block.WrapWidth` (người dùng
+  kéo rộng / hẹp ô sửa), kể cả khối một dòng → khối đó bắt đầu tự xuống dòng;
   '\n' luôn là xuống dòng cứng. Font gốc được giữ nếu không đổi font/kiểu và mọi ký tự mới có trong các mảnh
   dùng font đó. `MoveTextBlock` / `DeleteTextBlock` áp dụng cho mọi object của khối.
 - **Ô sửa trực tiếp** (`InlineTextEditor.OpenBlock`): đặt ở góc trên-trái khối, rộng ít nhất bằng khối, cỡ chữ
   theo zoom; khối là đoạn văn thì ô rộng cố định = bề rộng khối và tự xuống dòng (gần giống kết quả ghi vào PDF),
-  khoảng cách dòng theo `LineHeight`.
+  khoảng cách dòng theo `LineHeight`. Ô là `TextBox` nhiều dòng (`AcceptsReturn`): **Shift+Enter = xuống dòng
+  cứng**, Enter = xong, Esc = hủy, mũi tên / Delete chạy như ô nhập bình thường. Để các phím này tới được ô,
+  `DocumentView.PreviewKeyDown` **không** chuyển phím cho công cụ khi phím phát ra từ ô nhập trên trang
+  (xem viewer.md) — nếu không, `EditContentTool.OnKeyDown` bắt Enter / mũi tên / Delete trước (tunneling đi từ
+  ngoài vào). Khi ghi vào PDF, `SplitLines` chuẩn hóa `\r\n` của TextBox về `\n` = xuống dòng cứng.
+- **Kéo rộng ô đang sửa** (`InlineTextEditor.CreateGrip` / `SetWidth`): mép phải ô có tay nắm (thanh dọc màu
+  nhấn, con trỏ ↔, đặt trên `ToolLayer` cạnh ô, bám theo ô qua `SizeChanged`). Kéo ngang → đổi `TextBox.Width`
+  (tối thiểu ~37 DIP; `MinWidth` hạ về 0 để kéo hẹp được) và bật `TextWrapping.Wrap` → thấy ngay chữ chảy lại
+  theo bề rộng mới. Bề rộng mới (hệ view = (Width − 10 DIP padding/viền) / zoom) được trả về cùng text khi
+  Enter / click ra ngoài, rồi truyền vào `UpdateTextBlock(..., wrapWidth)` nên PDF ghi lại đúng bề rộng đó.
+  Trong lúc kéo, ô có thể mất focus bàn phím → cờ `_resizing` chặn không cho đóng ô; nhả chuột thì focus về ô.
+  Tay nắm chỉ có khi sửa khối có sẵn (`OpenBlock`), không có ở ô "Thêm chữ" (`AddText` chưa tự xuống dòng).
 - **Công cụ** (toolbar / menu Sửa):
   - *Sửa nội dung* (Alt+2, tab Chỉnh sửa): click = chọn (panel hiện nội dung + định dạng); nhấp đúp = sửa trực tiếp trên
-    trang (Enter = xong, Shift+Enter = xuống dòng, Esc = hủy); kéo = di chuyển; Delete = xóa.
+    trang (Enter = xong, Shift+Enter = xuống dòng, Esc = hủy; kéo tay nắm mép phải ô = đổi bề rộng khối chữ);
+    kéo = di chuyển; Delete = xóa.
   - *Thêm chữ* (Ctrl+T): chọn định dạng ở panel, click lên trang → gõ → Enter. Xong tự về công cụ Sửa nội dung
     và chọn sẵn text vừa thêm. Định dạng text mới được nhớ trong settings.
 - **Thêm text** (`AddText`): điểm click là góc trên-trái; baseline = điểm click + 0.8 × cỡ chữ. Hướng chữ lấy
@@ -94,6 +108,10 @@ Sửa text có sẵn, thêm text mới, xóa / di chuyển text; định dạng 
   bị chia thành nhiều khối (phần trước, chữ đậm, phần sau). Sửa một khối nằm giữa dòng thành chữ dài hơn thì
   có thể đè lên khối bên phải (không tự đẩy phần còn lại của dòng). Đoạn văn chảy lại sẽ gộp nhiều dấu cách liền nhau thành một; căn đều (justify) không giữ.
 - Đoạn văn ghi lại luôn căn trái theo lề dòng 2 (căn giữa / phải không giữ).
+- Kéo rộng ô sửa chỉ đổi bề rộng tự xuống dòng (chữ chảy lại), **không** co giãn cỡ chữ và không đẩy nội dung
+  khác trên trang → kéo rộng quá có thể đè lên khối bên phải. Bề rộng ô trên màn hình đo bằng font của Windows
+  nên có thể lệch nhẹ so với dòng thật trong PDF (cho lệch 2% trong `LayoutBlock`). Kéo hẹp hơn một từ dài thì
+  từ đó vẫn tràn ra ngoài (không cắt giữa từ).
 - Chế độ phủ: text gốc vẫn còn trong file bên dưới lớp che (tìm kiếm / copy trong app khác vẫn thấy); lớp
   che màu đặc nên nếu nền là ảnh / gradient sẽ thấy ô màu.
 - Text gốc ở chế độ "ẩn" (OCR của PDF scan) khi sửa sẽ thành chữ hiển thị (render mode = fill).
@@ -107,7 +125,8 @@ Sửa text có sẵn, thêm text mới, xóa / di chuyển text; định dạng 
   nền không tách, đoạn văn ngắt mềm, ngắt cứng `:` / danh sách, khác cỡ / kiểu / khoảng cách lớn / 2 cột / đường
   kẻ → tách; đậm + thường cùng dòng → 2 khối, các mảnh cùng kiểu quanh chữ đậm vẫn gộp, đổi kiểu giữa từ không
   tách, khoảng cách căn đều 1.2 em vẫn một dòng, đoạn văn không nối qua chữ đậm); PDFium: `GetTextBlocks_*`, `UpdateTextBlock_ReplacesAllPiecesOfLine`,
-  `UpdateTextBlock_Paragraph_RewrapsWithinOriginalWidth`, `DeleteAndMoveTextBlock_AffectWholeBlock`,
+  `UpdateTextBlock_Paragraph_RewrapsWithinOriginalWidth`, `UpdateTextBlock_NewWrapWidth_RewrapsToNewWidth`,
+  `UpdateTextBlock_SingleLine_NewWrapWidth_StartsWrapping`, `DeleteAndMoveTextBlock_AffectWholeBlock`,
   `UpdateTextBlock_DuplicateIndices_Rejected`.
 - Thủ công: mở PDF in từ trình duyệt (Chrome "Save as PDF"), sửa / xóa một dòng → lưu → mở lại, kiểm tra các
   chữ khác trên trang không bị mất; thử nhấp đúp sửa trực tiếp, kéo di chuyển, Ctrl+T thêm chữ tiếng Việt.
@@ -116,6 +135,10 @@ Sửa text có sẵn, thêm text mới, xóa / di chuyển text; định dạng 
   bề rộng cũ. Bảng có kẻ ô / cột cách xa → mỗi ô một khối. Tiêu đề đậm phía trên đoạn → khối riêng.
   Dòng "Nhãn **đậm**: giá trị thường" → di chuột lên phần đậm / phần thường thấy 2 khung riêng; dòng chữ thường
   cùng kiểu (kể cả căn đều) → một khung bao cả dòng.
+- Thủ công (kéo rộng ô sửa): nhấp đúp một dòng / đoạn → kéo tay nắm ở mép phải ô sang phải: ô rộng ra, chữ chảy
+  lại trong ô; Enter → trong PDF đoạn đó xuống dòng theo bề rộng mới. Kéo sang trái (hẹp hơn) → chữ xuống dòng
+  sớm hơn. Kéo xong gõ tiếp vẫn được (ô không bị đóng). Esc sau khi kéo → không đổi gì. Thử ở zoom 50% và 200%
+  (bề rộng ghi vào PDF phải như nhau).
 
 ## Lịch sử thay đổi
 | Ngày | Thay đổi | Lý do |
@@ -125,3 +148,5 @@ Sửa text có sẵn, thêm text mới, xóa / di chuyển text; định dạng 
 | 2026-10-03 | Thêm `FontNameFixer` (PDFsharp) chạy trước chế độ phủ; công cụ chuyển sang `EditContentTool` / `AddTextTool` + panel thuộc tính mới | Chế độ phủ để lại chữ gốc trong file; đổi tên font cho phép xóa / sửa thật. UI v2 |
 | 2026-10-07 | Sửa theo **khối chữ** (`TextBlockBuilder`, `GetTextBlocks`, `Update/Delete/MoveTextBlock`): gộp object cùng dòng (tự chèn dấu cách), gộp dòng liền mạch thành đoạn văn, chỉ tách khi khoảng trống > 1 em hoặc có ảnh / đường kẻ chen giữa; ô sửa bao cả khối + tự xuống dòng; ghi lại đoạn văn tự xuống dòng theo bề rộng cũ | Một dòng bị tách nhiều object → ô sửa quá nhỏ, mất dấu cách, đoạn văn phải sửa từng dòng |
 | 2026-10-07 | Tách khối theo kiểu chữ trong cùng dòng (đậm / nghiêng / màu / cỡ, tại ranh giới từ, không so tên font); đoạn văn không nối qua chỗ đổi kiểu; ngưỡng tách từ 1 → 1.5 em | Người dùng báo: trỏ vào dòng để sửa chỉ nhận 1–2 mảnh chữ; cần khoanh vùng sửa theo từng đoạn cùng kiểu (đậm riêng, thường riêng) |
+| 2026-10-07 | Ô sửa trực tiếp nhận lại Shift+Enter / mũi tên / Delete: `DocumentView` bỏ qua phím phát ra từ ô nhập trên trang | Người dùng báo: sửa text chỉ gõ được chữ, Shift+Enter không xuống dòng (công cụ Sửa nội dung bắt Enter trước → đóng rồi mở lại ô sửa) |
+| 2026-10-07 | Tay nắm kéo ngang ở mép phải ô sửa trực tiếp (`InlineTextEditor.CreateGrip` / `SetWidth`); `UpdateTextBlock` nhận tham số `wrapWidth` để ghi lại theo bề rộng mới (kể cả khối một dòng) | Người dùng báo: sửa được chữ rồi nhưng muốn kéo dài ô đang sửa theo chiều ngang (bề rộng cũ của khối bó hẹp chỗ gõ và chỗ chữ chảy lại) |

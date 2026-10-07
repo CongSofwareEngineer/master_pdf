@@ -30,6 +30,8 @@
 - Không chạy JavaScript của form (tính toán, định dạng, kiểm tra). Không hỗ trợ XFA.
 - Nút bấm (push button) và ô chữ ký số không điền được.
 - Cỡ chữ trong TextBox ước lượng theo chiều cao ô; giá trị khi lưu do PDFium sinh appearance.
+- Ô nhập của form nằm trên trang nên phím gõ trong ô không bị công cụ đang chọn chiếm (Enter của ô nhiều dòng,
+  mũi tên, Delete) — xem phần "Phím → công cụ" trong viewer.md.
 
 ## Cách test
 - Tự động: `ReadingTests.Forms_FillTextAndCheckbox_PersistAfterSave` (PDF fixture `PdfFixtures.FormAndLinks`;

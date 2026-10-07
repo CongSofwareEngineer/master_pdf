@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using PDFEditorApp.Models;
@@ -96,6 +97,14 @@ public sealed class DocumentView : UserControl
         _host.MouseLeave += (_, _) => _tool?.OnMouseLeave(this);
         PreviewKeyDown += (_, e) =>
         {
+            // Đang gõ trong ô nhập đặt trên trang (ô sửa chữ trực tiếp, ô điền form) → phím thuộc về ô đó:
+            // Shift+Enter xuống dòng, mũi tên di chuyển con trỏ, Delete xóa ký tự. PreviewKeyDown đi từ
+            // ngoài vào nên nếu không chặn ở đây, công cụ sẽ nuốt phím trước khi ô nhập thấy.
+            if (e.OriginalSource is TextBoxBase or PasswordBox)
+            {
+                return;
+            }
+
             if (_tool?.OnKeyDown(this, e) == true)
             {
                 e.Handled = true;
