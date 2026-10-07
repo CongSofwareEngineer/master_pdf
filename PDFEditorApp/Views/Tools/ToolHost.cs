@@ -36,8 +36,15 @@ public sealed record TextRangeSelection(int Page, int Start, int End) : EditorSe
 /// <summary>Nhận xét đang chọn.</summary>
 public sealed record AnnotationSelection(int Page, AnnotationInfo Annotation) : EditorSelection(Page);
 
-/// <summary>Object (chữ / ảnh / hình) đang chọn trong chế độ sửa nội dung.</summary>
-public sealed record ObjectSelection(int Page, PageObjectInfo Item, TextObjectInfo? Text) : EditorSelection(Page);
+/// <summary>
+/// Object đang chọn trong chế độ sửa nội dung. Chữ: <see cref="Text"/> là cả khối (dòng / đoạn văn),
+/// <see cref="Item"/> có khung của khối và chỉ số object đầu của khối.
+/// </summary>
+public sealed record ObjectSelection(int Page, PageObjectInfo Item, TextBlockInfo? Text) : EditorSelection(Page)
+{
+    public static ObjectSelection ForText(int page, TextBlockInfo block) =>
+        new(page, new PageObjectInfo(block.FirstObjectIndex, PageObjectKind.Text, block.ViewBounds), block);
+}
 
 /// <summary>Loại dấu đặt nhanh (Điền & Ký).</summary>
 public enum StampKind
@@ -94,7 +101,8 @@ public interface IToolHost
 
     IReadOnlyList<PageObjectInfo>? GetObjects(int page);
 
-    IReadOnlyList<TextObjectInfo>? GetTextObjects(int page);
+    /// <summary>Khối chữ (dòng / đoạn văn) của trang — đơn vị chọn / sửa chữ.</summary>
+    IReadOnlyList<TextBlockInfo>? GetTextBlocks(int page);
 
     void SetSelection(EditorSelection? selection);
 

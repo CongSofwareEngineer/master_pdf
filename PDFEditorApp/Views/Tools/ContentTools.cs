@@ -9,20 +9,27 @@ using PDFEditorApp.Services;
 
 namespace PDFEditorApp.Views.Tools;
 
-/// <summary>Ô sửa chữ trực tiếp trên trang (Enter = xong, Shift+Enter = xuống dòng, Esc = hủy).</summary>
+/// <summary>
+/// Ô sửa chữ trực tiếp trên trang (Enter = xong, Shift+Enter = xuống dòng, Esc = hủy). Sửa cả khối chữ:
+/// ô phủ hết khối; khối là đoạn văn thì ô có bề rộng cố định và tự xuống dòng
+/// giống khi ghi lại vào PDF.
+/// </summary>
 internal sealed class InlineTextEditor
 {
     private readonly TextBox _box;
     private readonly Action<string> _commit;
     private bool _done;
 
-    private InlineTextEditor(PageView page, PointD viewPoint, string text, TextStyle style, double minViewWidth, Action<string> commit)
+    private InlineTextEditor(PageView page, PointD viewPoint, string text, TextStyle style, double minViewWidth,
+        double wrapViewWidth, double lineHeight, Action<string> commit)
     {
         _commit = commit;
+        var wrap = wrapViewWidth > 0;
         _box = new TextBox
         {
             Text = text,
             AcceptsReturn = true,
+            TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap,
             MinWidth = Math.Max(60, minViewWidth * page.Scale) + 10,
             Padding = new Thickness(1),
             BorderThickness = new Thickness(1.5),
@@ -35,6 +42,17 @@ internal sealed class InlineTextEditor
             Foreground = ToolVisuals.Brush(style.Color),
             Style = null,
         };
+        if (wrap)
+        {
+            _box.Width = _box.MinWidth = Math.Max(60, wrapViewWidth * page.Scale) + 10;
+        }
+
+        if (lineHeight > 0)
+        {
+            TextBlock.SetLineHeight(_box, lineHeight * page.Scale);
+            TextBlock.SetLineStackingStrategy(_box, LineStackingStrategy.BlockLineHeight);
+        }
+
         _box.SetResourceReference(Control.BorderBrushProperty, "AccentBrandBrush");
         Canvas.SetLeft(_box, (viewPoint.X * page.Scale) - 3);
         Canvas.SetTop(_box, (viewPoint.Y * page.Scale) - 3);
@@ -49,7 +67,15 @@ internal sealed class InlineTextEditor
     }
 
     public static InlineTextEditor Open(PageView page, PointD viewPoint, string text, TextStyle style, double minViewWidth, Action<string> commit) =>
-        new(page, viewPoint, text, style, minViewWidth, commit);
+        new(page, viewPoint, text, style, minViewWidth, 0, 0, commit);
+
+    /// <summary>Sửa một khối chữ có sẵn (dòng / đoạn văn).</summary>
+    public static InlineTextEditor OpenBlock(PageView page, TextBlockInfo block, TextStyle style, Action<string> commit)
+    {
+        var sizeScale = style.FontSize / Math.Max(1e-6, block.Style.FontSize);
+        return new(page, new PointD(block.ViewBounds.X, block.ViewBounds.Y), block.Text, style, block.ViewBounds.Width,
+            block.WrapWidth > 0 ? block.ViewBounds.Width : 0, block.LineHeight * sizeScale, commit);
+    }
 
     private void OnKeyDown(object sender, KeyEventArgs e)
     {
@@ -156,22 +182,21 @@ public sealed class EditContentTool(IToolHost host) : Tool(host)
             return;
         }
 
-        var obj = FindObject(hit);
-        if (obj is null)
+        var target = FindTarget(hit);
+        if (target is null)
         {
             Host.SetSelection(null);
             return;
         }
 
-        var text = obj.Kind == PageObjectKind.Text ? Host.GetTextObjects(hit.Page)?.FirstOrDefault(t => t.ObjectIndex == obj.Index) : null;
-        Host.SetSelection(new ObjectSelection(hit.Page, obj, text));
-        if (e.ClickCount >= 2 && text is not null)
+        Host.SetSelection(target);
+        if (e.ClickCount >= 2 && target.Text is { } block)
         {
-            EditTextInline(hit.PageView, hit.Page, text);
+            EditTextInline(hit.PageView, hit.Page, block);
             return;
         }
 
-        BeginDrag(view, DragMode.Move, -1, hostPoint, obj.ViewRect, hit.PageView);
+        BeginDrag(view, DragMode.Move, -1, hostPoint, target.Item.ViewRect, hit.PageView);
     }
 
     public override void OnMouseMove(DocumentView view, PageHit? hit, Point hostPoint, MouseEventArgs e)
@@ -204,7 +229,7 @@ public sealed class EditContentTool(IToolHost host) : Tool(host)
             return;
         }
 
-        var obj = FindObject(hit);
+        var obj = FindTarget(hit)?.Item;
         view.SetCursor(obj is null ? null : Cursors.SizeAll);
         if (obj is not null && !(Host.Selection is ObjectSelection cur && cur.Page == hit.Page && cur.Item.Index == obj.Index))
         {
@@ -327,7 +352,15 @@ public sealed class EditContentTool(IToolHost host) : Tool(host)
         Host.SetSelection(null);
         _ = Host.EditAsync(sel.Page, () =>
         {
-            Host.Pdf.DeleteObject(sel.Page, sel.Item.Index);
+            if (sel.Text is { } block)
+            {
+                Host.Pdf.DeleteTextBlock(sel.Page, block);
+            }
+            else
+            {
+                Host.Pdf.DeleteObject(sel.Page, sel.Item.Index);
+            }
+
             return -1;
         }, "Status_ObjectDeleted");
     }
@@ -336,21 +369,27 @@ public sealed class EditContentTool(IToolHost host) : Tool(host)
     {
         var page = sel.Page;
         var index = sel.Item.Index;
-        _ = Host.EditAsync(page, () => Host.Pdf.TransformObject(page, index, transform), "Status_ObjectMoved",
+        var block = sel.Text;
+
+        // Khối chữ chỉ di chuyển (không có tay nắm co giãn) → dời cả khối.
+        _ = Host.EditAsync(page, () => block is null
+                ? Host.Pdf.TransformObject(page, index, transform)
+                : Host.Pdf.MoveTextBlock(page, block, transform.E, transform.F),
+            "Status_ObjectMoved",
             newIndex => Host.SelectObjectAfterEdit(page, newIndex));
     }
 
-    private void EditTextInline(PageView pv, int page, TextObjectInfo text)
+    private void EditTextInline(PageView pv, int page, TextBlockInfo block)
     {
         var style = Host.Options.TextStyle;
-        InlineTextEditor.Open(pv, new PointD(text.ViewBounds.X, text.ViewBounds.Y), text.Text, style, text.ViewBounds.Width, value =>
+        InlineTextEditor.OpenBlock(pv, block, style, value =>
         {
-            if (value == text.Text && style == text.Style)
+            if (value == block.Text && style == block.Style)
             {
                 return;
             }
 
-            _ = Host.EditAsync(page, () => Host.Pdf.UpdateTextObject(page, text.ObjectIndex, value, style), "Status_TextUpdated",
+            _ = Host.EditAsync(page, () => Host.Pdf.UpdateTextBlock(page, block, value, style), "Status_TextUpdated",
                 newIndex => Host.SelectObjectAfterEdit(page, newIndex));
         });
     }
@@ -369,12 +408,22 @@ public sealed class EditContentTool(IToolHost host) : Tool(host)
         view.CaptureMouseOnHost();
     }
 
-    private PageObjectInfo? FindObject(PageHit hit) =>
-        Host.GetObjects(hit.Page)?
-            .Where(o => o.ViewRect.Inflate(2).Contains(hit.View.X, hit.View.Y))
-            .OrderBy(o => o.Kind == PageObjectKind.Text ? 0 : 1)
-            .ThenBy(o => o.ViewRect.Area)
-            .FirstOrDefault();
+    /// <summary>Đối tượng dưới con trỏ: ưu tiên khối chữ (dòng / đoạn văn), rồi tới ảnh / hình nhỏ nhất.</summary>
+    private ObjectSelection? FindTarget(PageHit hit)
+    {
+        var block = Host.GetTextBlocks(hit.Page)?
+            .Where(b => b.ViewBounds.Inflate(2).Contains(hit.View.X, hit.View.Y))
+            .MinBy(b => b.ViewBounds.Area);
+        if (block is not null)
+        {
+            return ObjectSelection.ForText(hit.Page, block);
+        }
+
+        var obj = Host.GetObjects(hit.Page)?
+            .Where(o => o.Kind != PageObjectKind.Text && o.ViewRect.Inflate(2).Contains(hit.View.X, hit.View.Y))
+            .MinBy(o => o.ViewRect.Area);
+        return obj is null ? null : new ObjectSelection(hit.Page, obj, null);
+    }
 
     private static IEnumerable<PointD> HandlePoints(RectD r)
     {

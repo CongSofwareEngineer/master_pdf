@@ -412,8 +412,17 @@ public sealed partial class PdfService : IDisposable
     /// Khung chung sửa object có sẵn (text, ảnh, hình). Trước khi sửa trang có font trùng tên, thử
     /// <see cref="FontNameFixer"/> để PDFium tái tạo đúng; không được mới dùng chế độ phủ.
     /// </summary>
-    private int EditObject(int pageIndex, int objectIndex, bool textOnly, Func<IntPtr, IntPtr, bool, int> edit)
+    private int EditObject(int pageIndex, int objectIndex, bool textOnly, Func<IntPtr, IntPtr, bool, int> edit) =>
+        EditObjects(pageIndex, [objectIndex], textOnly, (page, objs, overlay) => edit(page, objs[0], overlay));
+
+    /// <summary>Như <see cref="EditObject"/> nhưng cho nhiều object cùng lúc (vd. cả khối chữ).</summary>
+    private int EditObjects(int pageIndex, IReadOnlyList<int> objectIndices, bool textOnly, Func<IntPtr, IntPtr[], bool, int> edit)
     {
+        if (objectIndices.Count == 0 || objectIndices.Distinct().Count() != objectIndices.Count)
+        {
+            throw new PdfException(PdfErrorKind.InvalidObject);
+        }
+
         lock (PdfiumLibrary.Sync)
         {
             EnsureOpen();
@@ -422,16 +431,16 @@ public sealed partial class PdfService : IDisposable
             try
             {
                 var page = ActivatePage(pageIndex);
-                var obj = ResolveObject(page, objectIndex, textOnly);
-                var own = IsOwnObject(obj);
+                var objs = ResolveObjects(page, objectIndices, textOnly);
+                var own = objs.All(IsOwnObject);
                 if (!own && HasAmbiguousFonts(page) && TryFixFontNames(before.Data))
                 {
                     page = ActivatePage(pageIndex);
-                    obj = ResolveObject(page, objectIndex, textOnly);
+                    objs = ResolveObjects(page, objectIndices, textOnly);
                 }
 
                 var overlay = !own && HasAmbiguousFonts(page);
-                result = edit(page, obj, overlay);
+                result = edit(page, objs, overlay);
                 if (!VerifyPage(ActivatePage(pageIndex), pageIndex))
                 {
                     if (overlay)
@@ -441,8 +450,8 @@ public sealed partial class PdfService : IDisposable
 
                     ReplaceDocument(before.Data);
                     page = ActivatePage(pageIndex);
-                    obj = ResolveObject(page, objectIndex, textOnly);
-                    result = edit(page, obj, true);
+                    objs = ResolveObjects(page, objectIndices, textOnly);
+                    result = edit(page, objs, true);
                     if (!VerifyPage(page, pageIndex))
                     {
                         throw new PdfException(PdfErrorKind.Regeneration);
@@ -460,8 +469,8 @@ public sealed partial class PdfService : IDisposable
         }
     }
 
-    private static IntPtr ResolveObject(IntPtr page, int objectIndex, bool textOnly) =>
-        textOnly ? GetTextObjectHandle(page, objectIndex) : GetObjectHandle(page, objectIndex);
+    private static IntPtr[] ResolveObjects(IntPtr page, IReadOnlyList<int> objectIndices, bool textOnly) =>
+        objectIndices.Select(i => textOnly ? GetTextObjectHandle(page, i) : GetObjectHandle(page, i)).ToArray();
 
     private static bool IsOwnObject(IntPtr obj) => HasMark(obj, OwnTextMark) || HasMark(obj, OwnObjectMark);
 

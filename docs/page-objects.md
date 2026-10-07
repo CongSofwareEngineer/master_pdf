@@ -14,7 +14,9 @@ Như Acrobat "Edit PDF": chọn ảnh / hình vẽ / khối chữ trên trang đ
 
 ## Logic chính
 - `GetPageObjects` liệt kê text / ảnh / path / shading / form XObject với khung trong hệ view; bỏ qua object
-  che (mark `PDFEditorCover`); khối chữ kèm nội dung để hiện trong panel.
+  che (mark `PDFEditorCover`). Chữ KHÔNG chọn theo từng text object mà theo **khối chữ** (`GetTextBlocks`, dòng /
+  đoạn văn gộp từ nhiều object, mỗi khối một kiểu chữ — xem text-edit.md): `EditContentTool.FindTarget` ưu tiên khối chữ dưới con trỏ,
+  sau đó mới tới ảnh / hình nhỏ nhất. Khối chữ chỉ di chuyển / xóa / sửa (không có tay nắm co giãn).
 - Biến đổi: tool tính `Affine` trong hệ view (dịch + co giãn quanh tay nắm đối diện; ảnh luôn giữ tỉ lệ, object khác giữ tỉ lệ khi nhấn Shift;
   phím mũi tên dịch 1 pt, Shift+mũi tên 10 pt, Delete xóa, Esc bỏ chọn),
   service đổi sang hệ trang (`ViewToPage`) rồi `FPDFPageObj_Transform`, sau đó tái tạo nội dung có kiểm tra
@@ -38,3 +40,5 @@ Như Acrobat "Edit PDF": chọn ảnh / hình vẽ / khối chữ trên trang đ
 |------|----------|-------|
 | 2026-10-03 | Tạo file log (dự kiến) | Nâng cấp UI tối + tính năng kiểu Acrobat |
 | 2026-10-03 | Hoàn thành chọn / di chuyển / co giãn / xóa object, chèn ảnh (JPEG inline), đặt bằng bóng xem trước | Tính năng Edit PDF kiểu Acrobat |
+| 2026-10-07 | Chọn chữ theo khối (dòng / đoạn văn) thay vì từng text object; `EditObject` → `EditObjects` (nhiều object một lần) | Một dòng bị tách nhiều object → ô sửa quá nhỏ, mất dấu cách (xem text-edit.md) |
+| 2026-10-07 | Khối chữ tách theo kiểu chữ (đậm / thường… cùng dòng là khối riêng) | Khoanh đúng vùng sửa (xem text-edit.md) |

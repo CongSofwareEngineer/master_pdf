@@ -387,7 +387,7 @@ public partial class DocumentWorkspace
         {
             var style = Options.TextStyle;
             var page = sel.Page;
-            _ = EditAsync(page, () => Pdf.UpdateTextObject(page, t.ObjectIndex, text, style), "Status_TextUpdated",
+            _ = EditAsync(page, () => Pdf.UpdateTextBlock(page, t, text, style), "Status_TextUpdated",
                 index => SelectObjectAfterEdit(page, index));
         }
     }

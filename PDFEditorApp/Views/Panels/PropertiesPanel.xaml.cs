@@ -183,7 +183,7 @@ public partial class PropertiesPanel : UserControl
         UpdateSliderLabels();
     }
 
-    private void ShowTextStyle(TextStyle style, string header, TextObjectInfo? text, bool withContent)
+    private void ShowTextStyle(TextStyle style, string header, TextBlockInfo? text, bool withContent)
     {
         HeaderText.Text = header;
         TextStyleSection.Visibility = Visibility.Visible;

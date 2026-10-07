@@ -263,7 +263,7 @@ public partial class DocumentWorkspace : UserControl, IToolHost, IDisposable
 
         public IReadOnlyList<PageObjectInfo>? Objects { get; init; }
 
-        public IReadOnlyList<TextObjectInfo>? TextObjects { get; init; }
+        public IReadOnlyList<TextBlockInfo>? TextBlocks { get; init; }
 
         public bool HasObjects { get; init; }
     }
@@ -278,7 +278,7 @@ public partial class DocumentWorkspace : UserControl, IToolHost, IDisposable
 
     public IReadOnlyList<PageObjectInfo>? GetObjects(int page) => Data(page, objects: true)?.Objects;
 
-    public IReadOnlyList<TextObjectInfo>? GetTextObjects(int page) => Data(page, objects: true)?.TextObjects;
+    public IReadOnlyList<TextBlockInfo>? GetTextBlocks(int page) => Data(page, objects: true)?.TextBlocks;
 
     private PageData? Data(int page, bool objects = false)
     {
@@ -316,7 +316,7 @@ public partial class DocumentWorkspace : UserControl, IToolHost, IDisposable
                 Annotations = pdf.GetAnnotations(page),
                 Forms = pdf.HasForms ? pdf.GetFormFields(page) : null,
                 Objects = objects ? pdf.GetPageObjects(page) : null,
-                TextObjects = objects ? pdf.GetTextObjects(page) : null,
+                TextBlocks = objects ? pdf.GetTextBlocks(page) : null,
                 HasObjects = objects,
             });
             if (_disposed || version != _pageVersions.GetValueOrDefault(page))
@@ -623,10 +623,13 @@ public partial class DocumentWorkspace : UserControl, IToolHost, IDisposable
             await Task.Delay(25);
         }
 
-        if (GetObjects(page)?.FirstOrDefault(o => o.Index == objectIndex) is { } obj)
+        if (GetTextBlocks(page)?.FirstOrDefault(b => b.Contains(objectIndex)) is { } block)
         {
-            var text = obj.Kind == PageObjectKind.Text ? GetTextObjects(page)?.FirstOrDefault(t => t.ObjectIndex == objectIndex) : null;
-            SetSelection(new ObjectSelection(page, obj, text));
+            SetSelection(ObjectSelection.ForText(page, block));
+        }
+        else if (GetObjects(page)?.FirstOrDefault(o => o.Index == objectIndex) is { } obj)
+        {
+            SetSelection(new ObjectSelection(page, obj, null));
         }
     }
 
